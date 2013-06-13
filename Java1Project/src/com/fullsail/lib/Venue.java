@@ -10,6 +10,6 @@
 package com.fullsail.lib;
 
 // This class will be used to create location objects from the FourSquare API.
-public class Location {
+public class Venue {
 
 }

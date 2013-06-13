@@ -1,0 +1,1326 @@
+{
+
+    meta: {
+        code: 200
+    }
+    notifications: [
+        {
+            type: "notificationTray"
+            item: {
+                unreadCount: 17
+            }
+        }
+    ]
+    response: {
+        venues: [
+            {
+                id: "42377700f964a52024201fe3"
+                name: "Brooklyn Heights Promenade"
+                contact: { }
+                location: {
+                    address: "Columbia Heights"
+                    crossStreet: "btwn Remsen & Orange"
+                    lat: 40.69829137715981
+                    lng: -73.99663209915161
+                    distance: 342
+                    postalCode: "11201"
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/brooklyn-heights-promenade/42377700f964a52024201fe3"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d164941735"
+                        name: "Plaza"
+                        pluralName: "Plazas"
+                        shortName: "Plaza / Square"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/parks_outdoors/plaza_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 14342
+                    usersCount: 6709
+                    tipCount: 86
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 3
+                    groups: [
+                        {
+                            type: "others"
+                            name: "Other people here"
+                            count: 3
+                            items: [ ]
+                        }
+                    ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4ebac60a0cd6904066e4108f"
+                name: "Brookyn Bridge Park Greenway"
+                contact: { }
+                location: {
+                    address: "Fulton Ferry Landing to Atlantic Ave."
+                    lat: 40.70025980212479
+                    lng: -73.99698615074158
+                    distance: 255
+                    postalCode: "11201"
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/brookyn-bridge-park-greenway/4ebac60a0cd6904066e4108f"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d163941735"
+                        name: "Park"
+                        pluralName: "Parks"
+                        shortName: "Park"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/parks_outdoors/park_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 357
+                    usersCount: 230
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 2
+                    groups: [
+                        {
+                            type: "others"
+                            name: "Other people here"
+                            count: 2
+                            items: [ ]
+                        }
+                    ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4c30d80aa0ced13a4dc1126e"
+                name: "Govenors island"
+                contact: { }
+                location: {
+                    lat: 40.69331172294952
+                    lng: -74.00569704490435
+                    distance: 886
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/govenors-island/4c30d80aa0ced13a4dc1126e"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d162941735"
+                        name: "Other Great Outdoors"
+                        pluralName: "Other Great Outdoors"
+                        shortName: "Other Outdoors"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/parks_outdoors/outdoors_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 527
+                    usersCount: 287
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "504a0656e4b0f680c8847b27"
+                name: "Habana Outpost"
+                contact: { }
+                location: {
+                    lat: 40.7
+                    lng: -74
+                    distance: 0
+                    postalCode: "10004"
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/habana-outpost/504a0656e4b0f680c8847b27"
+                categories: [ ]
+                verified: false
+                stats: {
+                    checkinsCount: 0
+                    usersCount: 0
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "503de4dce4b0857b003af5f7"
+                name: "monkeyHut"
+                contact: { }
+                location: {
+                    lat: 40.7
+                    lng: -74
+                    distance: 0
+                    postalCode: "10004"
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/monkeyhut/503de4dce4b0857b003af5f7"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d1e1931735"
+                        name: "Arcade"
+                        pluralName: "Arcades"
+                        shortName: "Arcade"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/arts_entertainment/arcade_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 2
+                    usersCount: 2
+                    tipCount: 4
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "500d8171e4b02ee07c2b90d8"
+                name: "Chinese Mirch"
+                contact: { }
+                location: {
+                    address: "Front Street and Wall Street"
+                    lat: 40.700843811035156
+                    lng: -74.00211334228516
+                    distance: 201
+                    postalCode: "10005"
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/chinese-mirch/500d8171e4b02ee07c2b90d8"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d1cb941735"
+                        name: "Food Truck"
+                        pluralName: "Food Trucks"
+                        shortName: "Street Food"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/food/streetfood_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 191
+                    usersCount: 58
+                    tipCount: 2
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4c3a5ad83849c92880e0c2b1"
+                name: "Blue Marble Ice Cream"
+                contact: { }
+                location: {
+                    address: "Brooklyn Bridge Park - Pier 1"
+                    lat: 40.70136599888968
+                    lng: -73.99794101715088
+                    distance: 230
+                    postalCode: "11201"
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/blue-marble-ice-cream/4c3a5ad83849c92880e0c2b1"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d1c9941735"
+                        name: "Ice Cream Shop"
+                        pluralName: "Ice Cream Shops"
+                        shortName: "Ice Cream"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/food/icecream_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: true
+                stats: {
+                    checkinsCount: 95
+                    usersCount: 87
+                    tipCount: 15
+                }
+                url: "http://www.bluemarbleicecream.com"
+                specials: {
+                    count: 1
+                    items: [
+                        {
+                            id: "51b7a417abd8ba400d0d9ad7"
+                            type: "frequency"
+                            message: "Get a FREE mini with any purchase this weekend at Brooklyn Bridge Park Pier 1! Just show the scooper that you've checked in and pick your flavor. See you there!"
+                            description: "Unlocked every check-in"
+                            finePrint: "Valid Friday-Sunday, June 14-16 only at our Brooklyn Bridge Park Pier 1 location."
+                            icon: "check-in"
+                            title: "Check-in Special"
+                            provider: "foursquare"
+                            redemption: "standard"
+                            page: {
+                                id: "58470189"
+                                firstName: "Blue Marble Ice Cream"
+                                gender: "none"
+                                photo: {
+                                    prefix: "https://irs0.4sqi.net/img/user/"
+                                    suffix: "/blank_boy.png"
+                                }
+                                type: "venuePage"
+                                venue: {
+                                    id: "4c3a5ad83849c92880e0c2b1"
+                                }
+                                tips: {
+                                    count: 0
+                                }
+                                homeCity: "Brooklyn, NY"
+                                bio: ""
+                                contact: { }
+                            }
+                        }
+                    ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                venuePage: {
+                    id: "58470189"
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4ff6de22e4b02ca33c0a04fb"
+                name: "Brooklyn Bridge Park Pop Up Pool"
+                contact: { }
+                location: {
+                    lat: 40.6999710773688
+                    lng: -73.99664153033778
+                    distance: 283
+                    postalCode: "11201"
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/brooklyn-bridge-park-pop-up-pool/4ff6de22e4b02ca33c0a04fb"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d15e941735"
+                        name: "Pool"
+                        pluralName: "Pools"
+                        shortName: "Pool"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/parks_outdoors/pool_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 304
+                    usersCount: 207
+                    tipCount: 4
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4dec42fbc65be8091dd57ffc"
+                name: "Cab 6B74"
+                contact: { }
+                location: {
+                    lat: 40.73933686083134
+                    lng: -73.98888259951185
+                    distance: 4478
+                    postalCode: "10038"
+                    city: "NYC"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/cab-6b74/4dec42fbc65be8091dd57ffc"
+                categories: [ ]
+                verified: false
+                stats: {
+                    checkinsCount: 4
+                    usersCount: 4
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4f8cb450e4b09ac7a7540353"
+                name: "24 Hour Picnic People"
+                contact: { }
+                location: {
+                    lat: 40.701868270082116
+                    lng: -73.99703176412758
+                    distance: 325
+                    postalCode: "10004"
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/24-hour-picnic-people/4f8cb450e4b09ac7a7540353"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d163941735"
+                        name: "Park"
+                        pluralName: "Parks"
+                        shortName: "Park"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/parks_outdoors/park_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 69
+                    usersCount: 20
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 1
+                    groups: [
+                        {
+                            type: "others"
+                            name: "Other people here"
+                            count: 1
+                            items: [ ]
+                        }
+                    ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4dcc605afa76e2535b237f50"
+                name: "Celebrate Brooklyn"
+                contact: { }
+                location: {
+                    address: "Pier 1"
+                    lat: 40.70181927468727
+                    lng: -73.99731296151289
+                    distance: 304
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/celebrate-brooklyn/4dcc605afa76e2535b237f50"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d1e5931735"
+                        name: "Music Venue"
+                        pluralName: "Music Venues"
+                        shortName: "Music Venue"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/arts_entertainment/musicvenue_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 132
+                    usersCount: 118
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "5199223d498e76a6074fe267"
+                name: "124 C. H."
+                contact: { }
+                location: {
+                    lat: 40.699571217104186
+                    lng: -73.99599305184151
+                    distance: 341
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/124-c-h/5199223d498e76a6074fe267"
+                categories: [
+                    {
+                        id: "4d954b06a243a5684965b473"
+                        name: "Residential Building (Apartment / Condo)"
+                        pluralName: "Residential Buildings (Apartments / Condos)"
+                        shortName: "Apartment Building"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/building/apartment_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 23
+                    usersCount: 1
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4ff6fb02e4b0fb4a8331264b"
+                name: "Brooklyn Bethal"
+                contact: {
+                    phone: "7185605000"
+                    formattedPhone: "(718) 560-5000"
+                }
+                location: {
+                    address: "124 Columbia Heights"
+                    crossStreet: "Pineapple St"
+                    lat: 40.70042772609431
+                    lng: -73.99993553766092
+                    distance: 47
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/brooklyn-bethal/4ff6fb02e4b0fb4a8331264b"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d131941735"
+                        name: "Spiritual Center"
+                        pluralName: "Spiritual Centers"
+                        shortName: "Spiritual"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/building/religious_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 2
+                    usersCount: 2
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4e2192468130e92fc6a44f09"
+                name: "Brooklyn Hip Hop Festival"
+                contact: {
+                    twitter: "bkhiphopfest"
+                }
+                location: {
+                    address: "26 New Dock St"
+                    crossStreet: "Water Street"
+                    lat: 40.697459526448704
+                    lng: -73.9980991642575
+                    distance: 325
+                    postalCode: "11201"
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/brooklyn-hip-hop-festival/4e2192468130e92fc6a44f09"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d1e5931735"
+                        name: "Music Venue"
+                        pluralName: "Music Venues"
+                        shortName: "Music Venue"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/arts_entertainment/musicvenue_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 333
+                    usersCount: 303
+                    tipCount: 1
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4c48dc0520ab1b8d6118fd15"
+                name: "Movies With A View"
+                contact: { }
+                location: {
+                    lat: 40.701676
+                    lng: -73.99734
+                    distance: 291
+                    postalCode: "10004"
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/movies-with-a-view/4c48dc0520ab1b8d6118fd15"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d162941735"
+                        name: "Other Great Outdoors"
+                        pluralName: "Other Great Outdoors"
+                        shortName: "Other Outdoors"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/parks_outdoors/outdoors_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 516
+                    usersCount: 443
+                    tipCount: 1
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "513096f0e4b097f2bc6e7bf2"
+                name: "Looking At A Beautiful View"
+                contact: { }
+                location: {
+                    lat: 40.70038182799225
+                    lng: -73.99589549293981
+                    distance: 348
+                    postalCode: "11201"
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/looking-at-a-beautiful-view/513096f0e4b097f2bc6e7bf2"
+                categories: [
+                    {
+                        id: "50aa9e094b90af0d42d5de0d"
+                        name: "City"
+                        pluralName: "Cities"
+                        shortName: "City"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/parks_outdoors/neighborhood_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 12
+                    usersCount: 9
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4c86983e74d7b60c4c80a5d8"
+                name: "Hillside Park"
+                contact: { }
+                location: {
+                    address: "Columbia Heights"
+                    crossStreet: "Vine st."
+                    lat: 40.69982487223443
+                    lng: -73.99571759128533
+                    distance: 361
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/hillside-park/4c86983e74d7b60c4c80a5d8"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d163941735"
+                        name: "Park"
+                        pluralName: "Parks"
+                        shortName: "Park"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/parks_outdoors/park_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: true
+                stats: {
+                    checkinsCount: 70
+                    usersCount: 55
+                    tipCount: 1
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4ff75105d86ca0c938e35829"
+                name: "Oscar Tuazon: People"
+                contact: {
+                    phone: "2122237800"
+                    formattedPhone: "(212) 223-7800"
+                    twitter: "publicartfund"
+                }
+                location: {
+                    address: "Brooklyn Bridge Park Pier 1"
+                    lat: 40.700959311037984
+                    lng: -73.99800539016724
+                    distance: 199
+                    postalCode: "10004"
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/oscar-tuazon-people/4ff75105d86ca0c938e35829"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d1e2931735"
+                        name: "Art Gallery"
+                        pluralName: "Art Galleries"
+                        shortName: "Art Gallery"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/arts_entertainment/artgallery_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: true
+                stats: {
+                    checkinsCount: 15
+                    usersCount: 13
+                    tipCount: 1
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4b7c8bedf964a5202c9a2fe3"
+                name: "160 Columbia Heights"
+                contact: { }
+                location: {
+                    address: "160 Columbia Hts"
+                    lat: 40.69817619576914
+                    lng: -73.99641198067849
+                    distance: 364
+                    postalCode: "11201"
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/160-columbia-heights/4b7c8bedf964a5202c9a2fe3"
+                categories: [ ]
+                verified: false
+                stats: {
+                    checkinsCount: 181
+                    usersCount: 28
+                    tipCount: 1
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4d1b6de99aa55481bd14cee0"
+                name: "Hot Dog Vendor on corner of John and Front"
+                contact: { }
+                location: {
+                    address: "John Street"
+                    crossStreet: "Front Street"
+                    lat: 40.7001719
+                    lng: -74.000928
+                    distance: 80
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/hot-dog-vendor-on-corner-of-john-and-front/4d1b6de99aa55481bd14cee0"
+                categories: [ ]
+                verified: false
+                stats: {
+                    checkinsCount: 8
+                    usersCount: 7
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "51b09a67498e38fa2eff0653"
+                name: "TVB"
+                contact: {
+                    twitter: "tvbtweets"
+                }
+                location: {
+                    address: "120 Wall Street"
+                    lat: 40.70464893561963
+                    lng: -74.00532404420811
+                    distance: 685
+                    city: "NY"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/tvb/51b09a67498e38fa2eff0653"
+                categories: [
+                    {
+                        id: "50328a8e91d4c4b30a586d6c"
+                        name: "Non-Profit"
+                        pluralName: "Non-Profits"
+                        shortName: "Non-Profit"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/building/default_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 4
+                    usersCount: 1
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4e358ec645dd1c42bf1feed6"
+                name: "Pier 66 Helicopter Ride"
+                contact: { }
+                location: {
+                    lat: 40.69746574802049
+                    lng: -74.0030515934891
+                    distance: 381
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/pier-66-helicopter-ride/4e358ec645dd1c42bf1feed6"
+                categories: [ ]
+                verified: false
+                stats: {
+                    checkinsCount: 9
+                    usersCount: 9
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4f2c1bbae4b0ccfb1d99b510"
+                name: "kk hair salon"
+                contact: { }
+                location: {
+                    lat: 40.69956588745117
+                    lng: -74.00108337402344
+                    distance: 103
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/kk-hair-salon/4f2c1bbae4b0ccfb1d99b510"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d110951735"
+                        name: "Salon / Barbershop"
+                        pluralName: "Salons / Barbershops"
+                        shortName: "Salon / Barbershop"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/shops/salon_barber_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 1
+                    usersCount: 1
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "519906d3498edb9fbe545f7b"
+                name: "124 Columbia Heights"
+                contact: { }
+                location: {
+                    lat: 40.69976383032999
+                    lng: -73.99579793398844
+                    distance: 355
+                    city: "Brooklyn"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/124-columbia-heights/519906d3498edb9fbe545f7b"
+                categories: [
+                    {
+                        id: "5032891291d4c4b30a586d68"
+                        name: "Assisted Living"
+                        pluralName: "Assisted Living"
+                        shortName: "Assisted Living"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/building/apartment_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 1
+                    usersCount: 1
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4dac4c974df01c19b1b0fc82"
+                name: "Internal Medicine Associates"
+                contact: { }
+                location: {
+                    address: "530 1st Ave"
+                    crossStreet: "30th street"
+                    lat: 40.698978
+                    lng: -74.00043
+                    distance: 119
+                    postalCode: "10016"
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/internal-medicine-associates/4dac4c974df01c19b1b0fc82"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d177941735"
+                        name: "Doctor's Office"
+                        pluralName: "Doctor's Offices"
+                        shortName: "Doctor's Office"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/building/medical_doctorsoffice_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 2
+                    usersCount: 2
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4d9788e5daec224b4642333e"
+                name: "Dr Shur"
+                contact: { }
+                location: {
+                    address: "140 Elgar Place"
+                    lat: 40.698978
+                    lng: -74.00043
+                    distance: 119
+                    city: "Bronx"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/dr-shur/4d9788e5daec224b4642333e"
+                categories: [ ]
+                verified: false
+                stats: {
+                    checkinsCount: 1
+                    usersCount: 1
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4d2cb2c677a2a1cd02c387b7"
+                name: "QBE"
+                contact: { }
+                location: {
+                    address: "80 Pine St"
+                    crossStreet: "Water St"
+                    lat: 40.698978
+                    lng: -74.00043
+                    distance: 119
+                    postalCode: "10005"
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/qbe/4d2cb2c677a2a1cd02c387b7"
+                categories: [ ]
+                verified: false
+                stats: {
+                    checkinsCount: 1
+                    usersCount: 1
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "51756043e4b0debe9dbd3fdd"
+                name: "Brooklyn Bethel"
+                contact: { }
+                location: {
+                    lat: 40.69968081688824
+                    lng: -73.99572333005095
+                    distance: 362
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/brooklyn-bethel/51756043e4b0debe9dbd3fdd"
+                categories: [
+                    {
+                        id: "50328a8e91d4c4b30a586d6c"
+                        name: "Non-Profit"
+                        pluralName: "Non-Profits"
+                        shortName: "Non-Profit"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/building/default_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 2
+                    usersCount: 2
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "4cb92bdc7148f04d9336d5ab"
+                name: "Livys apartment !"
+                contact: { }
+                location: {
+                    address: "95 Wall St"
+                    crossStreet: "Water st"
+                    lat: 40.700249
+                    lng: -74.001442
+                    distance: 124
+                    postalCode: "10005"
+                    city: "New York"
+                    state: "NY"
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/livys-apartment-/4cb92bdc7148f04d9336d5ab"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d1a3941735"
+                        name: "College Residence Hall"
+                        pluralName: "College Residence Halls"
+                        shortName: "Residence Hall"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/education/residencehall_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 1
+                    usersCount: 1
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+            {
+                id: "5054eb43e4b04ed4f0dd1b30"
+                name: "La cabana"
+                contact: { }
+                location: {
+                    lat: 40.69875
+                    lng: -73.99953
+                    distance: 144
+                    country: "United States"
+                    cc: "US"
+                }
+                canonicalUrl: "https://foursquare.com/v/la-cabana/5054eb43e4b04ed4f0dd1b30"
+                categories: [
+                    {
+                        id: "4bf58dd8d48988d154941735"
+                        name: "Cuban Restaurant"
+                        pluralName: "Cuban Restaurants"
+                        shortName: "Cuban"
+                        icon: {
+                            prefix: "https://foursquare.com/img/categories_v2/food/default_"
+                            suffix: ".png"
+                        }
+                        primary: true
+                    }
+                ]
+                verified: false
+                stats: {
+                    checkinsCount: 1
+                    usersCount: 1
+                    tipCount: 0
+                }
+                specials: {
+                    count: 0
+                    items: [ ]
+                }
+                hereNow: {
+                    count: 0
+                    groups: [ ]
+                }
+                referralId: "v-1371082711"
+            }
+        ]
+    }
+
+}
