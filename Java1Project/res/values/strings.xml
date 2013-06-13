@@ -5,4 +5,50 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
+    <string name="Venue1">
+    	{
+    		id: "42377700f964a52024201fe3"
+    		name: "Brooklyn Heights Promenade"
+    		contact: { }
+    		location: {}
+    		canonicalUrl:
+    		categories: []
+    		verified: false
+    		stats: {}
+    		specials: {}
+    		hereNow: {}
+    		referralId: "v-1371082711"
+    	}
+    </string>
+    <string name="Venue2">
+        {
+    		id: "4ebac60a0cd6904066e4108f"
+    		name: "Brookyn Bridge Park Greenway"
+    		contact: { }
+    		location: {}
+    		canonicalUrl:
+    		categories: []
+    		verified: false
+    		stats: {}
+    		specials: {}
+    		hereNow: {}
+    		referralId: "v-1371082711"
+    	}
+    </string>
+    <string name="Venue3">
+        {
+    		id: "4c30d80aa0ced13a4dc1126e"
+    		name: "Govenors island"
+    		contact: { }
+    		location: {}
+    		canonicalUrl:
+    		categories: []
+    		verified: false
+    		stats: {}
+    		specials: {}
+    		hereNow: {}
+    		referralId: "v-1371082711"
+    	}
+	</string>
+
 </resources>

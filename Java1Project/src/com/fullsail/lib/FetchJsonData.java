@@ -21,7 +21,7 @@ import android.content.res.AssetManager;
  */
 
 // Great solution: http://prativas.wordpress.com/category/android/part-1-retrieving-a-json-file/
-public class RetrieveJsonData {
+public class FetchJsonData {
 	public static String jsonToStringFromAssetFolder(String fileName,Context context) throws IOException {
         AssetManager manager = context.getAssets();
         InputStream file = manager.open(fileName);
