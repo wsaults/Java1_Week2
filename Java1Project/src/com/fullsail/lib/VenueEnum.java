@@ -14,6 +14,7 @@ public enum VenueEnum {
 	VINDEX1(1),
 	VINDEX2(2);
 	
+	@SuppressWarnings("unused")
 	private final int value;
 	VenueEnum(int value) {
 		this.value = value;
