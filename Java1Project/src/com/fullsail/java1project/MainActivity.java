@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
 
 				}
 				catch(Exception e){ 
-					Log.e("Whoops - something went wrong!", "error");
+					Log.e("Encoding the search url failed", e.toString());
 					e.printStackTrace(); 
 				}
 				
@@ -191,10 +191,10 @@ public class MainActivity extends Activity {
 							stringBuilder.append(lineIn);
 						}
 					} else {
-						Log.e("Whoops - something went wrong!", "error");
+						Log.e("Status code not 200", "getStatusCode error");
 					}
 				} catch(Exception e){ 
-					Log.e("Whoops - something went wrong!", "error");
+					Log.e("The HTTP request did not work", e.toString());
 					e.printStackTrace(); 
 				}
 			}
@@ -203,7 +203,6 @@ public class MainActivity extends Activity {
 		}
 		/*
 		 * Process result of search query
-		 * - this receives JSON string representing tweets with search term included
 		 */
 		protected void onPostExecute(String result) {
 			//start preparing result string for display
@@ -211,21 +210,17 @@ public class MainActivity extends Activity {
 			try {
 				//get JSONObject from result
 				JSONObject resultObject = new JSONObject(result);
-				Log.i("resultObject", resultObject.toString());
 				stringResultBuilder.append(resultObject.toString());
-				
-//				JSONArray jsonArray = resultObject.getJSONArray("result");
-//				Log.i("jsonArray", jsonArray.toString());
 			}
 			catch (Exception e) {
-				Log.e("Whoops - something went wrong!", "error");
+				Log.e("Exception occured while building the result object", e.toString());
 				e.printStackTrace();
 			}
 			//check result exists
 			if(stringResultBuilder.length()>0) {
 				Log.i("json", stringResultBuilder.toString());
 			} else {
-				Log.e("Whoops - something went wrong!", "error");
+				Log.e("stringResultBuilder length is less than 0", "error");
 			}
 		}
 	}
