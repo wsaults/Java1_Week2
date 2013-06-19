@@ -10,13 +10,28 @@
 package com.fullsail.lib;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.R;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 
 /* Use this to parse.
@@ -39,7 +54,7 @@ public class FetchJsonData {
 	/*
 	 * Retrieve a response from the url destination
 	 */
-	public static String getURLStringResponse(URL url) {
+	public static String getURLStringResponse(URL url) {		
 		String response = "";
 		try {
 			URLConnection connection = url.openConnection();
@@ -61,4 +76,5 @@ public class FetchJsonData {
 		
 		return response;
 	}
+
 }

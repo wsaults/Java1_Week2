@@ -9,11 +9,21 @@
  */
 package com.fullsail.java1project;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -87,57 +97,56 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				// Build the url
+				try{
+					//encode in case user has included symbols such as spaces etc
+					String encodedSearch = URLEncoder.encode("2172797", "UTF-8");
+					//append encoded user search term to search URL
+					String searchURL = "http://openweathermap.org/data/2.5/weather?id="+encodedSearch+"&APPID=63a7a37aaacf05a109e77797f3af426d";
+					//instantiate and execute AsyncTask
+					new Request().execute(searchURL);
+
+				}
+				catch(Exception e){ 
+					Log.e("Whoops - something went wrong!", "error");
+					e.printStackTrace(); 
+				}
+				
+				
+				/*
 				try {
-					// Build the url
-					String url = "https://api.foursquare.com/v2/venues/search?ll=40.7,-74&oauth_token=PTPFPHXJZADXIXI1JERVYIJAFNJKYOMLL52D2RB2IKIXEQ52&v=20130612";
-					try {
-						url = URLEncoder.encode(url, "UTF-8");
-					} catch (Exception e) {
-						Log.e("Bad URL", "Encoding issue");
-					}
+					// Create venues from the resouces					
+					JSONObject jsonObject = new JSONObject(getString(R.string.Venue1));
+					venues[VenueEnum.VINDEX0.ordinal()] = new Venue(jsonObject);
 					
-					// Make the request for the JSON data
-					URL finalURL;
-					try {
-						finalURL = new URL(url);
-						Request request = new Request();
-						request.execute(finalURL);
-					} catch (MalformedURLException e) {
-						Log.e("Bad URL", "Malformed URL");
-						finalURL = null;
-					}
+					jsonObject = new JSONObject(getString(R.string.Venue2));
+					venues[VenueEnum.VINDEX1.ordinal()] = new Venue(jsonObject);
 					
-//					// Create venues from the resouces					
-//					JSONObject jsonObject = new JSONObject(getString(R.string.Venue1));
-//					venues[VenueEnum.VINDEX0.ordinal()] = new Venue(jsonObject);
-//					
-//					jsonObject = new JSONObject(getString(R.string.Venue2));
-//					venues[VenueEnum.VINDEX1.ordinal()] = new Venue(jsonObject);
-//					
-//					jsonObject = new JSONObject(getString(R.string.Venue3));
-//					venues[VenueEnum.VINDEX2.ordinal()] = new Venue(jsonObject);
-//					
-//					textView.setText("");
-//					for (Venue venue : venues) {
-//						textView.append("=== Venue ===\n");
-//						textView.append("Venue id: " + venue.getId() + "\nVenue name: " + venue.getName() + "\n");
-//						
-//						if (!areRadiosPoulated) {
-//							// Populate the radio buttons
-//							RadioButton rb = new RadioButton(context);
-//							rb.setText(venue.getName());
-//							venueGroupOptions.addView(rb);
-//						}
-//					}	
+					jsonObject = new JSONObject(getString(R.string.Venue3));
+					venues[VenueEnum.VINDEX2.ordinal()] = new Venue(jsonObject);
+					
+					textView.setText("");
+					for (Venue venue : venues) {
+						textView.append("=== Venue ===\n");
+						textView.append("Venue id: " + venue.getId() + "\nVenue name: " + venue.getName() + "\n");
+						
+						if (!areRadiosPoulated) {
+							// Populate the radio buttons
+							RadioButton rb = new RadioButton(context);
+							rb.setText(venue.getName());
+							venueGroupOptions.addView(rb);
+						}
+					}	
 					areRadiosPoulated = true;
 				} catch (JSONException e1) {
 					// TODO Auto-generated catch block
 					Log.i("Error: ", e1.getMessage());
 					e1.printStackTrace();
 				}
+				*/
 			}
 		});
-		
+		/*
 		// Fetch the json data from the data file
 		try {
 			String json = FetchJsonData.jsonToStringFromAssetFolder("data.json", getBaseContext());
@@ -146,23 +155,78 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		
 		setContentView(linearLayout);
 	}
 	
-	private class Request extends AsyncTask<URL, Void, String> {
+	private class Request extends AsyncTask<String, Void, String> {
+		/*
+		 * Carry out fetching task in background
+		 * - receives search URL via execute method
+		 */
 		@Override
-		protected String doInBackground(URL... urls) {
-			String response = "";
-			for (URL url:urls) {
-				response = FetchJsonData.getURLStringResponse(url);
+		protected String doInBackground(String... stringURL) {
+			//start building result which will be json string
+			StringBuilder stringBuilder = new StringBuilder();
+			//should only be one URL, receives array
+			for (String searchURL : stringURL) {
+				HttpClient client = new DefaultHttpClient();
+				try {
+					//pass search URL string to fetch
+					HttpGet get = new HttpGet(searchURL);
+					//execute request
+					HttpResponse response = client.execute(get);
+					//check status, only proceed if ok
+					StatusLine searchStatus = response.getStatusLine();
+					if (searchStatus.getStatusCode() == 200) {
+						//get the response
+						HttpEntity entity = response.getEntity();
+						InputStream content = entity.getContent();
+						//process the results
+						InputStreamReader input = new InputStreamReader(content);
+						BufferedReader reader = new BufferedReader(input);
+						String lineIn;
+						while ((lineIn = reader.readLine()) != null) {
+							stringBuilder.append(lineIn);
+						}
+					} else {
+						Log.e("Whoops - something went wrong!", "error");
+					}
+				} catch(Exception e){ 
+					Log.e("Whoops - something went wrong!", "error");
+					e.printStackTrace(); 
+				}
 			}
-			return response;
+			//return result string
+			return stringBuilder.toString();
 		}
-		
-		@Override
+		/*
+		 * Process result of search query
+		 * - this receives JSON string representing tweets with search term included
+		 */
 		protected void onPostExecute(String result) {
-			Log.i("URL Response", result);
+			//start preparing result string for display
+			StringBuilder stringResultBuilder = new StringBuilder();
+			try {
+				//get JSONObject from result
+				JSONObject resultObject = new JSONObject(result);
+				Log.i("resultObject", resultObject.toString());
+				stringResultBuilder.append(resultObject.toString());
+				
+//				JSONArray jsonArray = resultObject.getJSONArray("result");
+//				Log.i("jsonArray", jsonArray.toString());
+			}
+			catch (Exception e) {
+				Log.e("Whoops - something went wrong!", "error");
+				e.printStackTrace();
+			}
+			//check result exists
+			if(stringResultBuilder.length()>0) {
+				Log.i("json", stringResultBuilder.toString());
+			} else {
+				Log.e("Whoops - something went wrong!", "error");
+			}
 		}
 	}
 
