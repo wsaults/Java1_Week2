@@ -10,10 +10,14 @@
 package com.fullsail.java1project;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -84,28 +88,47 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				try {
-					// Create venues from the resouces					
-					JSONObject jsonObject = new JSONObject(getString(R.string.Venue1));
-					venues[VenueEnum.VINDEX0.ordinal()] = new Venue(jsonObject);
+					// Build the url
+					String url = "https://api.foursquare.com/v2/venues/search?ll=40.7,-74&oauth_token=PTPFPHXJZADXIXI1JERVYIJAFNJKYOMLL52D2RB2IKIXEQ52&v=20130612";
+					try {
+						url = URLEncoder.encode(url, "UTF-8");
+					} catch (Exception e) {
+						Log.e("Bad URL", "Encoding issue");
+					}
 					
-					jsonObject = new JSONObject(getString(R.string.Venue2));
-					venues[VenueEnum.VINDEX1.ordinal()] = new Venue(jsonObject);
+					// Make the request for the JSON data
+					URL finalURL;
+					try {
+						finalURL = new URL(url);
+						Request request = new Request();
+						request.execute(finalURL);
+					} catch (MalformedURLException e) {
+						Log.e("Bad URL", "Malformed URL");
+						finalURL = null;
+					}
 					
-					jsonObject = new JSONObject(getString(R.string.Venue3));
-					venues[VenueEnum.VINDEX2.ordinal()] = new Venue(jsonObject);
-					
-					textView.setText("");
-					for (Venue venue : venues) {
-						textView.append("=== Venue ===\n");
-						textView.append("Venue id: " + venue.getId() + "\nVenue name: " + venue.getName() + "\n");
-						
-						if (!areRadiosPoulated) {
-							// Populate the radio buttons
-							RadioButton rb = new RadioButton(context);
-							rb.setText(venue.getName());
-							venueGroupOptions.addView(rb);
-						}
-					}	
+//					// Create venues from the resouces					
+//					JSONObject jsonObject = new JSONObject(getString(R.string.Venue1));
+//					venues[VenueEnum.VINDEX0.ordinal()] = new Venue(jsonObject);
+//					
+//					jsonObject = new JSONObject(getString(R.string.Venue2));
+//					venues[VenueEnum.VINDEX1.ordinal()] = new Venue(jsonObject);
+//					
+//					jsonObject = new JSONObject(getString(R.string.Venue3));
+//					venues[VenueEnum.VINDEX2.ordinal()] = new Venue(jsonObject);
+//					
+//					textView.setText("");
+//					for (Venue venue : venues) {
+//						textView.append("=== Venue ===\n");
+//						textView.append("Venue id: " + venue.getId() + "\nVenue name: " + venue.getName() + "\n");
+//						
+//						if (!areRadiosPoulated) {
+//							// Populate the radio buttons
+//							RadioButton rb = new RadioButton(context);
+//							rb.setText(venue.getName());
+//							venueGroupOptions.addView(rb);
+//						}
+//					}	
 					areRadiosPoulated = true;
 				} catch (JSONException e1) {
 					// TODO Auto-generated catch block
@@ -125,6 +148,22 @@ public class MainActivity extends Activity {
 		}
 		
 		setContentView(linearLayout);
+	}
+	
+	private class Request extends AsyncTask<URL, Void, String> {
+		@Override
+		protected String doInBackground(URL... urls) {
+			String response = "";
+			for (URL url:urls) {
+				response = FetchJsonData.getURLStringResponse(url);
+			}
+			return response;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			Log.i("URL Response", result);
+		}
 	}
 
 	@Override
