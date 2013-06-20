@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -36,9 +38,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.fullsail.lib.Connectivity;
@@ -49,27 +50,29 @@ import com.fullsail.lib.Venue;
 public class MainActivity extends Activity {
 	
 	// Variables
-	Venue venues[] = new Venue[3];
 	LinearLayout linearLayout;
 	LinearLayout subLinearLayout;
 	LinearLayout.LayoutParams layoutParams;
 	TextView textView;
-	RadioGroup venueGroupOptions;
 	Context context = this;
-	Boolean areRadiosPoulated;
 	Boolean connected = false;
 	HashMap<String, String> _history;
+	
+	// Weather textviews
+	EditText _name;
+	EditText _country;
+	EditText _temp;
+	EditText _windSpeed;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		_history = new HashMap<String, String>();
+		_history = getHistory();
+		Log.i("Current history: ",_history.toString());
 		
 		// Test Network Connetion
 		connected = Connectivity.getConnectionStatus(context);
-		
-		areRadiosPoulated = false;
 		
 		// Setup the linear layout
 		linearLayout = new LinearLayout(this);
@@ -77,15 +80,48 @@ public class MainActivity extends Activity {
 		layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 		linearLayout.setLayoutParams(layoutParams);
 		
-		// Add the button
+		// Add the Get button
 		Button button = new Button(this);
-		button.setText("Get JSON");
+		button.setText("Search");
 		linearLayout.addView(button);
 		
 		// Add the text view
 		textView = new TextView(this);
-		textView.setText("The JSON data will appear here.");
+		textView.setText("Enter a city name and press the Search button.");
 		linearLayout.addView(textView);
+		
+		// Weather text views
+		TextView name = new TextView(this);
+		name.setText("Name:");
+
+		TextView country = new TextView(this);
+		country.setText("Country:");
+
+		TextView temp = new TextView(this);
+		temp.setText("Temp:");
+
+		TextView windSpeed = new TextView(this);
+		windSpeed.setText("Wind Speed:");
+
+		_name = new EditText(this);
+		_country = new EditText(this);
+		_country.setEnabled(false);
+		_temp = new EditText(this);
+		_windSpeed = new EditText(this);
+
+		linearLayout.addView(name);
+		linearLayout.addView(_name);
+		linearLayout.addView(country);
+		linearLayout.addView(_country);
+		linearLayout.addView(temp);
+		linearLayout.addView(_temp);
+		linearLayout.addView(windSpeed);
+		linearLayout.addView(_windSpeed);
+		
+		// Add the POST button
+		Button submit = new Button(this);
+		submit.setText("Submit");
+		linearLayout.addView(submit);
 		
 		// Setup the nested ll
 		subLinearLayout = new LinearLayout(this);
@@ -93,14 +129,9 @@ public class MainActivity extends Activity {
 		subLinearLayout.setLayoutParams(layoutParams);
 		linearLayout.addView(subLinearLayout);
 		
-		// Add the text view
-		TextView optionsText = new TextView(this);
-		optionsText.setText("Choose a locaiton.");
-		subLinearLayout.addView(optionsText);
-		
 		// Radio group
-		venueGroupOptions = new RadioGroup(this);
-		subLinearLayout.addView(venueGroupOptions);
+//		venueGroupOptions = new RadioGroup(this);
+//		subLinearLayout.addView(venueGroupOptions);
 		
 		// Button event handler
 		button.setOnClickListener(new View.OnClickListener() { 
@@ -110,10 +141,13 @@ public class MainActivity extends Activity {
 				if	(connected) {
 					// Build the url
 					try{
+						String input = (_name.getText().toString().equals("")) ? "Dallas" : _name.getText().toString();
+						_name.setText(input);
+						
 						//encode in case user has included symbols such as spaces etc
-						String encodedSearch = URLEncoder.encode("2172797", "UTF-8");
+						String encodedSearch = URLEncoder.encode(input, "UTF-8");
 						//append encoded user search term to search URL
-						String searchURL = "http://openweathermap.org/data/2.5/weather?id="+encodedSearch+"&APPID=63a7a37aaacf05a109e77797f3af426d";
+						String searchURL = "http://openweathermap.org/data/2.5/weather?q="+encodedSearch+"&APPID=63a7a37aaacf05a109e77797f3af426d";
 						//instantiate and execute AsyncTask
 						new Request().execute(searchURL);
 
@@ -219,11 +253,9 @@ public class MainActivity extends Activity {
 		 */
 		protected void onPostExecute(String result) {
 			//start preparing result string for display
-			StringBuilder stringResultBuilder = new StringBuilder();
 			try {
 				//get JSONObject from result
 				JSONObject json = new JSONObject(result);
-				stringResultBuilder.append(json.toString());
 				
 				JSONObject coord = json.getJSONObject("coord");
 				JSONObject sys = json.getJSONObject("sys");
@@ -235,21 +267,24 @@ public class MainActivity extends Activity {
 				Log.i("coord", coord.toString());
 				Log.i("weather", weather.toString());
 				Log.i("main", main.toString());
-				
 				Log.i("id", json.getString("id"));
 				
-				_history.put(json.getString("id"), stringResultBuilder.toString());
+				_country.setText(sys.getString("country"));
+				
+				// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
+				Double temp = Double.parseDouble(main.getString("temp"));
+				temp = (temp - 273.15) * 1.8000 + 32.00;
+				BigDecimal bd = new BigDecimal(temp).setScale(2, RoundingMode.HALF_UP);
+				
+				_temp.setText(bd.toString());
+				_windSpeed.setText(wind.getString("speed"));
+				
+				_history.put(json.getString("id"), result);
 				FileManager.storeObjectFile(context, "history", _history, false);
 			}
 			catch (Exception e) {
 				Log.e("Exception occured while building the result object", e.toString());
 				e.printStackTrace();
-			}
-			//check result exists
-			if(stringResultBuilder.length()>0) {
-//				Log.i("json", stringResultBuilder.toString());
-			} else {
-				Log.e("stringResultBuilder length is less than 0", "no results");
 			}
 		}
 	}
@@ -259,5 +294,18 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private HashMap<String, String> getHistory() {
+		Object stored = FileManager.readObjectgFile(context, "history", false);
+		HashMap<String, String> history;
+		if (stored == null) {
+			Log.i("History","History is empty");
+			history = new HashMap<String, String>();
+		} else {
+			history = (HashMap<String, String>) stored;
+		}
+		return history;
 	}
 }
