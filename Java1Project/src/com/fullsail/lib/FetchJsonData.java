@@ -76,5 +76,4 @@ public class FetchJsonData {
 		
 		return response;
 	}
-
 }

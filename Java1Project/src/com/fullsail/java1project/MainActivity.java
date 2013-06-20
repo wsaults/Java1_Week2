@@ -40,9 +40,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.FetchJsonData;
 import com.fullsail.lib.Venue;
-import com.fullsail.lib.VenueEnum;
 
 public class MainActivity extends Activity {
 	
@@ -55,10 +55,15 @@ public class MainActivity extends Activity {
 	RadioGroup venueGroupOptions;
 	Context context = this;
 	Boolean areRadiosPoulated;
+	Boolean connected = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// Test Network Connetion
+		connected = Connectivity.getConnectionStatus(context);
+		
 		areRadiosPoulated = false;
 		
 		// Setup the linear layout
@@ -97,19 +102,32 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// Build the url
-				try{
-					//encode in case user has included symbols such as spaces etc
-					String encodedSearch = URLEncoder.encode("2172797", "UTF-8");
-					//append encoded user search term to search URL
-					String searchURL = "http://openweathermap.org/data/2.5/weather?id="+encodedSearch+"&APPID=63a7a37aaacf05a109e77797f3af426d";
-					//instantiate and execute AsyncTask
-					new Request().execute(searchURL);
+				if	(connected) {
+					// Build the url
+					try{
+						//encode in case user has included symbols such as spaces etc
+						String encodedSearch = URLEncoder.encode("2172797", "UTF-8");
+						//append encoded user search term to search URL
+						String searchURL = "http://openweathermap.org/data/2.5/weather?id="+encodedSearch+"&APPID=63a7a37aaacf05a109e77797f3af426d";
+						//instantiate and execute AsyncTask
+						new Request().execute(searchURL);
 
-				}
-				catch(Exception e){ 
-					Log.e("Encoding the search url failed", e.toString());
-					e.printStackTrace(); 
+					}
+					catch(Exception e){ 
+						Log.e("Encoding the search url failed", e.toString());
+						e.printStackTrace(); 
+					}
+				} else {
+					Log.i("Network Connection", Connectivity.getConnectionType(context));
+					// Fetch the json data from the data file
+					try {
+						String json = FetchJsonData.jsonToStringFromAssetFolder("data.json", getBaseContext());
+						Log.i("JSON string: ", json);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						Log.e("Could not get the local JSON", e.toString());
+						e.printStackTrace();
+					}
 				}
 				
 				
@@ -146,16 +164,6 @@ public class MainActivity extends Activity {
 				*/
 			}
 		});
-		/*
-		// Fetch the json data from the data file
-		try {
-			String json = FetchJsonData.jsonToStringFromAssetFolder("data.json", getBaseContext());
-			Log.i("JSON string: ", json);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
 		
 		setContentView(linearLayout);
 	}
@@ -220,7 +228,7 @@ public class MainActivity extends Activity {
 			if(stringResultBuilder.length()>0) {
 				Log.i("json", stringResultBuilder.toString());
 			} else {
-				Log.e("stringResultBuilder length is less than 0", "error");
+				Log.e("stringResultBuilder length is less than 0", "no results");
 			}
 		}
 	}
