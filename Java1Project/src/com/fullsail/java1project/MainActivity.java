@@ -45,6 +45,7 @@ import android.widget.TextView;
 import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.FetchJsonData;
 import com.fullsail.lib.FileManager;
+import com.fullsail.lib.HistorySpinner;
 import com.fullsail.lib.Venue;
 
 public class MainActivity extends Activity {
@@ -57,6 +58,7 @@ public class MainActivity extends Activity {
 	Context context = this;
 	Boolean connected = false;
 	HashMap<String, String> _history;
+	HistorySpinner _historySpinner;
 	
 	// Weather textviews
 	EditText _name;
@@ -84,6 +86,10 @@ public class MainActivity extends Activity {
 		Button button = new Button(this);
 		button.setText("Search");
 		linearLayout.addView(button);
+		
+		// Add history display
+		_historySpinner = new HistorySpinner(context);
+		linearLayout.addView(_historySpinner);
 		
 		// Add the text view
 		textView = new TextView(this);
