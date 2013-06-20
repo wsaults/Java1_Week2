@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -42,6 +43,7 @@ import android.widget.TextView;
 
 import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.FetchJsonData;
+import com.fullsail.lib.FileManager;
 import com.fullsail.lib.Venue;
 
 public class MainActivity extends Activity {
@@ -56,10 +58,13 @@ public class MainActivity extends Activity {
 	Context context = this;
 	Boolean areRadiosPoulated;
 	Boolean connected = false;
+	HashMap<String, String> _history;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		_history = new HashMap<String, String>();
 		
 		// Test Network Connetion
 		connected = Connectivity.getConnectionStatus(context);
@@ -217,8 +222,24 @@ public class MainActivity extends Activity {
 			StringBuilder stringResultBuilder = new StringBuilder();
 			try {
 				//get JSONObject from result
-				JSONObject resultObject = new JSONObject(result);
-				stringResultBuilder.append(resultObject.toString());
+				JSONObject json = new JSONObject(result);
+				stringResultBuilder.append(json.toString());
+				
+				JSONObject coord = json.getJSONObject("coord");
+				JSONObject sys = json.getJSONObject("sys");
+				JSONArray weather = json.getJSONArray("weather");
+				JSONObject main = json.getJSONObject("main");
+				JSONObject wind = json.getJSONObject("wind");
+				JSONObject clouds = json.getJSONObject("clouds");
+				
+				Log.i("coord", coord.toString());
+				Log.i("weather", weather.toString());
+				Log.i("main", main.toString());
+				
+				Log.i("id", json.getString("id"));
+				
+				_history.put(json.getString("id"), stringResultBuilder.toString());
+				FileManager.storeObjectFile(context, "history", _history, false);
 			}
 			catch (Exception e) {
 				Log.e("Exception occured while building the result object", e.toString());
@@ -226,7 +247,7 @@ public class MainActivity extends Activity {
 			}
 			//check result exists
 			if(stringResultBuilder.length()>0) {
-				Log.i("json", stringResultBuilder.toString());
+//				Log.i("json", stringResultBuilder.toString());
 			} else {
 				Log.e("stringResultBuilder length is less than 0", "no results");
 			}
