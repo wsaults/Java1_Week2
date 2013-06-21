@@ -10,33 +10,17 @@
 package com.fullsail.lib;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import android.R;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 
-/* Use this to parse.
- * String jsonLocation = converJsonToStringFromAssetFolder(your_filename, your_context);
- * parseJsonFileToJavaObjects(jsonLocation);//this function parses the json data to java object
+/*
+ * This class is for fetching JSON data from a url and from a local source
  */
 
 // Great solution: http://prativas.wordpress.com/category/android/part-1-retrieving-a-json-file/

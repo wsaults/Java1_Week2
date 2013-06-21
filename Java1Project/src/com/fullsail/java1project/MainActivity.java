@@ -15,8 +15,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
@@ -27,7 +25,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
@@ -46,7 +43,9 @@ import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.FetchJsonData;
 import com.fullsail.lib.FileManager;
 import com.fullsail.lib.HistorySpinner;
-import com.fullsail.lib.Venue;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class MainActivity extends Activity {
 	
@@ -70,8 +69,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		Parse.initialize(this, "6WphHpeWQJxN6LcsjSME5SuDJNByUgWcp4HutqIG", "QiICRS6hDy2RqJavJXbZm0n5yFlNYhDOBW8MPKRi"); 
+		
 		_history = getHistory();
-		Log.i("Current history: ",_history.toString());
 		
 		// Test Network Connetion
 		connected = Connectivity.getConnectionStatus(context);
@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
 		linearLayout.addView(button);
 		
 		// Add history display
-		_historySpinner = new HistorySpinner(context);
+		_historySpinner = new HistorySpinner(context, _history);
 		linearLayout.addView(_historySpinner);
 		
 		// Add the text view
@@ -139,6 +139,31 @@ public class MainActivity extends Activity {
 //		venueGroupOptions = new RadioGroup(this);
 //		subLinearLayout.addView(venueGroupOptions);
 		
+		submit.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if	(connected) {
+					// Send the data to parse
+					try {						
+						if(_name.getText().toString().equals("")) return;
+						
+						ParseObject weatherObject = new ParseObject("WeatherObject");
+						weatherObject.put("name", _name.getText().toString());
+						weatherObject.put("country", _country.getText().toString());
+						weatherObject.put("temp", _temp.getText().toString());
+						weatherObject.put("windSpeed", _windSpeed.getText().toString());
+						weatherObject.saveInBackground();
+					} catch(Exception e){ 
+						Log.e("Could not send data to prase. Will try again later.", e.toString());
+						e.printStackTrace(); 
+					}
+				} else {
+					Log.i("Network Connection", Connectivity.getConnectionType(context));	
+				}
+			}
+		});
+		
 		// Button event handler
 		button.setOnClickListener(new View.OnClickListener() { 
 
@@ -174,39 +199,6 @@ public class MainActivity extends Activity {
 						e.printStackTrace();
 					}
 				}
-				
-				
-				/*
-				try {
-					// Create venues from the resouces					
-					JSONObject jsonObject = new JSONObject(getString(R.string.Venue1));
-					venues[VenueEnum.VINDEX0.ordinal()] = new Venue(jsonObject);
-					
-					jsonObject = new JSONObject(getString(R.string.Venue2));
-					venues[VenueEnum.VINDEX1.ordinal()] = new Venue(jsonObject);
-					
-					jsonObject = new JSONObject(getString(R.string.Venue3));
-					venues[VenueEnum.VINDEX2.ordinal()] = new Venue(jsonObject);
-					
-					textView.setText("");
-					for (Venue venue : venues) {
-						textView.append("=== Venue ===\n");
-						textView.append("Venue id: " + venue.getId() + "\nVenue name: " + venue.getName() + "\n");
-						
-						if (!areRadiosPoulated) {
-							// Populate the radio buttons
-							RadioButton rb = new RadioButton(context);
-							rb.setText(venue.getName());
-							venueGroupOptions.addView(rb);
-						}
-					}	
-					areRadiosPoulated = true;
-				} catch (JSONException e1) {
-					// TODO Auto-generated catch block
-					Log.i("Error: ", e1.getMessage());
-					e1.printStackTrace();
-				}
-				*/
 			}
 		});
 		
@@ -268,7 +260,7 @@ public class MainActivity extends Activity {
 				JSONArray weather = json.getJSONArray("weather");
 				JSONObject main = json.getJSONObject("main");
 				JSONObject wind = json.getJSONObject("wind");
-				JSONObject clouds = json.getJSONObject("clouds");
+//				JSONObject clouds = json.getJSONObject("clouds");
 				
 				Log.i("coord", coord.toString());
 				Log.i("weather", weather.toString());

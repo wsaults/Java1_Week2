@@ -1,6 +1,19 @@
+/*
+ * project 	Java1Project
+ * 
+ * package 	com.fullsail.lib
+ * 
+ * @author 	William Saults
+ * 
+ * date 	Jun 20, 2013
+ */
 package com.fullsail.lib;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +24,9 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+/*
+ * This class populates the history spinner.
+ */
 
 public class HistorySpinner extends LinearLayout {
 	
@@ -18,14 +34,29 @@ public class HistorySpinner extends LinearLayout {
 	Context _context;
 	ArrayList<String> _cities = new ArrayList<String>();
 	
-	public HistorySpinner(Context context) {
+	public HistorySpinner(Context context, HashMap<String, String> history) {
 		super(context);
+		
+		_cities.add("City History");
+		
+		Log.i("Current history: ",history.toString());
+		for (Object obj : history.values().toArray()) {
+			try {
+				JSONObject json = new JSONObject(obj.toString());
+//				Log.i("name", json.getString("name"));
+				if (json.getString("name").length() > 0) {
+					_cities.add(json.getString("name"));
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		_context = context;
 		LayoutParams lp;
 		lp = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
 		
-		_cities.add("City History");
 		_spinner = new Spinner(_context);
 		_spinner.setLayoutParams(lp);
 		ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, _cities);
@@ -52,6 +83,6 @@ public class HistorySpinner extends LinearLayout {
 	}
 	
 	private void updateHistory() {
-		_cities.add("Test");
+//		_cities.add("Test");
 	}
 }

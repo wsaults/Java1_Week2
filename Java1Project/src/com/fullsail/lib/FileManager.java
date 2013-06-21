@@ -1,3 +1,12 @@
+/*
+ * project 	Java1Project
+ * 
+ * package 	com.fullsail.lib
+ * 
+ * @author 	William Saults
+ * 
+ * date 	Jun 20, 2013
+ */
 package com.fullsail.lib;
 
 import java.io.BufferedInputStream;
@@ -11,6 +20,10 @@ import java.io.ObjectOutputStream;
 
 import android.content.Context;
 import android.util.Log;
+
+/*
+ * This class manages saving and reading files from the device
+ */
 
 public class FileManager {
 	@SuppressWarnings("resource")
