@@ -47,10 +47,11 @@ import com.fullsail.lib.HistorySpinner;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+
 public class MainActivity extends Activity {
 	
 	// Variables
-	LinearLayout linearLayout;
+//	LinearLayout linearLayout;
 	LinearLayout subLinearLayout;
 	LinearLayout.LayoutParams layoutParams;
 	TextView textView;
@@ -69,6 +70,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		setContentView(R.layout.mainlayout);
+		
 		Parse.initialize(this, "6WphHpeWQJxN6LcsjSME5SuDJNByUgWcp4HutqIG", "QiICRS6hDy2RqJavJXbZm0n5yFlNYhDOBW8MPKRi"); 
 		
 		_history = getHistory();
@@ -76,17 +79,7 @@ public class MainActivity extends Activity {
 		// Test Network Connetion
 		connected = Connectivity.getConnectionStatus(context);
 		
-		// Setup the linear layout
-		linearLayout = new LinearLayout(this);
-		linearLayout.setOrientation(LinearLayout.VERTICAL);
-		layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-		linearLayout.setLayoutParams(layoutParams);
-		
-		// Add the Get button
-		Button button = new Button(this);
-		button.setText("Search");
-		linearLayout.addView(button);
-		
+		/*		
 		// Add history display
 		_historySpinner = new HistorySpinner(context, _history);
 		linearLayout.addView(_historySpinner);
@@ -123,21 +116,15 @@ public class MainActivity extends Activity {
 		linearLayout.addView(_temp);
 		linearLayout.addView(windSpeed);
 		linearLayout.addView(_windSpeed);
+		*/
+		
+		// Add the Get button
+		Button button = (Button)findViewById(R.id.searchButton);
 		
 		// Add the POST button
-		Button submit = new Button(this);
-		submit.setText("Submit");
-		linearLayout.addView(submit);
+		Button submit = (Button)findViewById(R.id.submitButton);
 		
-		// Setup the nested ll
-		subLinearLayout = new LinearLayout(this);
-		subLinearLayout.setOrientation(LinearLayout.VERTICAL);
-		subLinearLayout.setLayoutParams(layoutParams);
-		linearLayout.addView(subLinearLayout);
-		
-		// Radio group
-//		venueGroupOptions = new RadioGroup(this);
-//		subLinearLayout.addView(venueGroupOptions);
+		_name = (EditText)findViewById(R.id.cityNameEditText);
 		
 		submit.setOnClickListener(new View.OnClickListener() {
 			
@@ -201,8 +188,6 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
-		
-		setContentView(linearLayout);
 	}
 	
 	private class Request extends AsyncTask<String, Void, String> {
