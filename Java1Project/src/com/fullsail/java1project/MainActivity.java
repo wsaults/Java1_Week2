@@ -37,6 +37,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fullsail.lib.Connectivity;
@@ -51,8 +52,7 @@ import com.parse.ParseObject;
 public class MainActivity extends Activity {
 	
 	// Variables
-//	LinearLayout linearLayout;
-	LinearLayout subLinearLayout;
+	LinearLayout linearLayout;
 	LinearLayout.LayoutParams layoutParams;
 	TextView textView;
 	Context context = this;
@@ -79,44 +79,17 @@ public class MainActivity extends Activity {
 		// Test Network Connetion
 		connected = Connectivity.getConnectionStatus(context);
 		
-		/*		
+		// Setup a linear layout
+		linearLayout = new LinearLayout(this);
+		linearLayout.setOrientation(LinearLayout.VERTICAL);
+		layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+		linearLayout.setLayoutParams(layoutParams);
+		
 		// Add history display
 		_historySpinner = new HistorySpinner(context, _history);
 		linearLayout.addView(_historySpinner);
-		
-		// Add the text view
-		textView = new TextView(this);
-		textView.setText("Enter a city name and press the Search button.");
-		linearLayout.addView(textView);
-		
-		// Weather text views
-		TextView name = new TextView(this);
-		name.setText("Name:");
-
-		TextView country = new TextView(this);
-		country.setText("Country:");
-
-		TextView temp = new TextView(this);
-		temp.setText("Temp:");
-
-		TextView windSpeed = new TextView(this);
-		windSpeed.setText("Wind Speed:");
-
-		_name = new EditText(this);
-		_country = new EditText(this);
-		_country.setEnabled(false);
-		_temp = new EditText(this);
-		_windSpeed = new EditText(this);
-
-		linearLayout.addView(name);
-		linearLayout.addView(_name);
-		linearLayout.addView(country);
-		linearLayout.addView(_country);
-		linearLayout.addView(temp);
-		linearLayout.addView(_temp);
-		linearLayout.addView(windSpeed);
-		linearLayout.addView(_windSpeed);
-		*/
+	
+		this.addContentView(linearLayout, layoutParams);
 		
 		// Add the Get button
 		Button button = (Button)findViewById(R.id.searchButton);
@@ -125,6 +98,10 @@ public class MainActivity extends Activity {
 		Button submit = (Button)findViewById(R.id.submitButton);
 		
 		_name = (EditText)findViewById(R.id.cityNameEditText);
+		_country = (EditText)findViewById(R.id.countryEditText);
+		_temp = (EditText)findViewById(R.id.tempEditText);
+		_windSpeed = (EditText)findViewById(R.id.windEditText);
+		
 		
 		submit.setOnClickListener(new View.OnClickListener() {
 			
