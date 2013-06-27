@@ -37,7 +37,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fullsail.lib.Connectivity;
@@ -102,7 +101,6 @@ public class MainActivity extends Activity {
 		_temp = (EditText)findViewById(R.id.tempEditText);
 		_windSpeed = (EditText)findViewById(R.id.windEditText);
 		
-		
 		submit.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -158,7 +156,6 @@ public class MainActivity extends Activity {
 						String json = FetchJsonData.jsonToStringFromAssetFolder("data.json", getBaseContext());
 						Log.i("JSON string: ", json);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						Log.e("Could not get the local JSON", e.toString());
 						e.printStackTrace();
 					}
