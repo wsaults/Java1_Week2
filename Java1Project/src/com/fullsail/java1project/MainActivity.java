@@ -57,7 +57,6 @@ public class MainActivity extends Activity {
 	Context context = this;
 	Boolean connected = false;
 	HashMap<String, String> _history;
-	HistorySpinner _historySpinner;
 	
 	// Weather textviews
 	EditText _name;
@@ -83,10 +82,6 @@ public class MainActivity extends Activity {
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 		layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 		linearLayout.setLayoutParams(layoutParams);
-		
-		// Add history display
-		_historySpinner = new HistorySpinner(context, _history);
-		linearLayout.addView(_historySpinner);
 	
 		this.addContentView(linearLayout, layoutParams);
 		
