@@ -5,7 +5,7 @@
  * 
  * @author 	William Saults
  * 
- * date 	Jun 12, 2013
+ * date 	Jul 9, 2013
  */
 package com.fullsail.java1project;
 
@@ -48,6 +48,10 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MainActivity.
+ */
 public class MainActivity extends Activity {
 	
 	// Variables
@@ -64,6 +68,9 @@ public class MainActivity extends Activity {
 	EditText _temp;
 	EditText _windSpeed;
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -135,10 +142,12 @@ public class MainActivity extends Activity {
 						//encode in case user has included symbols such as spaces etc
 						String encodedSearch = URLEncoder.encode(input, "UTF-8");
 						//append encoded user search term to search URL
-						String searchURL = "http://openweathermap.org/data/2.5/weather?q="+encodedSearch+"&APPID=63a7a37aaacf05a109e77797f3af426d";
+						// http://api.openweathermap.org/data/2.5/forecast/daily?q=London&units=metric&cnt=7
+						String searchURL = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+encodedSearch+"&APPID=63a7a37aaacf05a109e77797f3af426d&units=metric&cnt=7";
 						//instantiate and execute AsyncTask
 						new Request().execute(searchURL);
-
+						
+//						FetchForecast.fetchForecast(input);
 					}
 					catch(Exception e){ 
 						Log.e("Encoding the search url failed", e.toString());
@@ -159,10 +168,16 @@ public class MainActivity extends Activity {
 		});
 	}
 	
+	/**
+	 * The Class Request.
+	 */
 	private class Request extends AsyncTask<String, Void, String> {
 		/*
 		 * Carry out fetching task in background
 		 * - receives search URL via execute method
+		 */
+		/* (non-Javadoc)
+		 * @see android.os.AsyncTask#doInBackground(Params[])
 		 */
 		@Override
 		protected String doInBackground(String... stringURL) {
@@ -203,11 +218,22 @@ public class MainActivity extends Activity {
 		/*
 		 * Process result of search query
 		 */
+		/* (non-Javadoc)
+		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+		 */
 		protected void onPostExecute(String result) {
 			//start preparing result string for display
 			try {
 				//get JSONObject from result
 				JSONObject json = new JSONObject(result);
+				
+				JSONArray list = json.getJSONArray("list");
+
+				for (int i = 0; i < list.length(); i++) {
+					Log.i("list obj", list.getJSONObject(i).toString());
+				}
+				
+				/*
 				
 				JSONObject coord = json.getJSONObject("coord");
 				JSONObject sys = json.getJSONObject("sys");
@@ -233,6 +259,7 @@ public class MainActivity extends Activity {
 				
 				_history.put(json.getString("id"), result);
 				FileManager.storeObjectFile(context, "history", _history, false);
+				*/
 			}
 			catch (Exception e) {
 				Log.e("Exception occured while building the result object", e.toString());
@@ -241,6 +268,9 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -248,6 +278,11 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Gets the history.
+	 *
+	 * @return the history
+	 */
 	@SuppressWarnings("unchecked")
 	private HashMap<String, String> getHistory() {
 		Object stored = FileManager.readObjectgFile(context, "history", false);
