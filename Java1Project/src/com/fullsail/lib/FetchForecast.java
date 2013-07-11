@@ -1,3 +1,12 @@
+/*
+ * project 	Java1Project
+ * 
+ * package 	com.fullsail.lib
+ * 
+ * @author 	William Saults
+ * 
+ * date 	Jul 10, 2013
+ */
 package com.fullsail.lib;
 
 import java.io.BufferedReader;

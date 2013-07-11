@@ -5,7 +5,7 @@
  * 
  * @author 	William Saults
  * 
- * date 	Jul 9, 2013
+ * date 	Jul 10, 2013
  */
 package com.fullsail.java1project;
 
@@ -29,8 +29,12 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Messenger;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -40,6 +44,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fullsail.lib.Connectivity;
+import com.fullsail.lib.DataService;
 import com.fullsail.lib.FetchJsonData;
 import com.fullsail.lib.FileManager;
 import com.fullsail.lib.HistorySpinner;
@@ -133,37 +138,31 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if	(connected) {
-					// Build the url
-					try{
-						String input = (_name.getText().toString().equals("")) ? "Dallas" : _name.getText().toString();
-						_name.setText(input);
-						
-						//encode in case user has included symbols such as spaces etc
-						String encodedSearch = URLEncoder.encode(input, "UTF-8");
-						//append encoded user search term to search URL
-						// http://api.openweathermap.org/data/2.5/forecast/daily?q=London&units=metric&cnt=7
-						String searchURL = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+encodedSearch+"&APPID=63a7a37aaacf05a109e77797f3af426d&units=metric&cnt=7";
-						//instantiate and execute AsyncTask
-						new Request().execute(searchURL);
-						
-//						FetchForecast.fetchForecast(input);
+				Handler dataServieHandler = new Handler() {
+
+					@Override
+					public void handleMessage(Message msg) {
+						// TODO Auto-generated method stub
+						String response = null;
+						if (msg.arg1 == RESULT_OK && msg.obj != null) {
+							try {
+								response = (String) msg.obj;
+							} catch (Exception e) {
+								Log.e("", e.getMessage().toString());
+							}
+							
+							// TODO: do something with the response.
+						}
 					}
-					catch(Exception e){ 
-						Log.e("Encoding the search url failed", e.toString());
-						e.printStackTrace(); 
-					}
-				} else {
-					Log.i("Network Connection", Connectivity.getConnectionType(context));
-					// Fetch the json data from the data file
-					try {
-						String json = FetchJsonData.jsonToStringFromAssetFolder("data.json", getBaseContext());
-						Log.i("JSON string: ", json);
-					} catch (IOException e) {
-						Log.e("Could not get the local JSON", e.toString());
-						e.printStackTrace();
-					}
-				}
+					
+				};
+				
+				Messenger dataMessenger = new Messenger(dataServieHandler);
+				Intent startDataServiceIntent = new Intent(context, DataService.class);
+				startDataServiceIntent.putExtra(DataService.MESSENGER_KEY, dataMessenger);
+				startService(startDataServiceIntent);
+				
+				Log.i("Waiting on servie to end: ", "Waiting...");
 			}
 		});
 	}
