@@ -20,6 +20,17 @@ public class Connectivity {
 	static Boolean _conn = false;
 	static String _connectionType = "Unavailable";
 	
+	private static Connectivity instance = null;
+	protected Connectivity() {
+		// Exists to defeat instantiation.
+	}
+	public static Connectivity getInstance() {
+		if(instance == null) {
+			instance = new Connectivity();
+		}
+		return instance;
+	}
+	
 	public static String getConnectionType(Context context) {
 		netInfo(context);
 		return _connectionType;
