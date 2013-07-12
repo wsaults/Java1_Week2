@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
+import java.util.HashMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,7 +44,9 @@ public class DataService extends IntentService {
 	
 	public static final String MESSENGER_KEY = "messenger";
 	public static final String CITY_KEY = "city";
+	Messenger messenger;
 	Message message;
+	HashMap <String, String> jsonHashMap;
 	
 	/**
 	 * Instantiates a new data service.
@@ -62,7 +66,7 @@ public class DataService extends IntentService {
 		Log.i("onHandleIntent", "started");
 		
 		Bundle extras = intent.getExtras();
-		Messenger messenger = (Messenger) extras.get(MESSENGER_KEY);
+		messenger = (Messenger) extras.get(MESSENGER_KEY);
 		String city = extras.getString(CITY_KEY);
 		message = Message.obtain();
 		
@@ -95,13 +99,6 @@ public class DataService extends IntentService {
 				Log.e("Could not get the local JSON", e.toString());
 				e.printStackTrace();
 			}
-		}
-		
-		try {
-			messenger.send(message);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
@@ -166,45 +163,27 @@ public class DataService extends IntentService {
 			try {
 				//get JSONObject from result
 				JSONObject json = new JSONObject(result);
-				
 				JSONArray list = json.getJSONArray("list");
 
-				for (int i = 0; i < list.length(); i++) {
-					Log.i("list obj", list.getJSONObject(i).toString());
-				}
+//				for (int i = 0; i < list.length(); i++) {
+//					Log.i("list obj", list.getJSONObject(i).toString());
+//				}
 				
-//				Save array of JSON objects locally
-				
-				/*
-				
-				JSONObject coord = json.getJSONObject("coord");
-				JSONObject sys = json.getJSONObject("sys");
-				JSONArray weather = json.getJSONArray("weather");
-				JSONObject main = json.getJSONObject("main");
-				JSONObject wind = json.getJSONObject("wind");
-//				JSONObject clouds = json.getJSONObject("clouds");
-				
-				Log.i("coord", coord.toString());
-				Log.i("weather", weather.toString());
-				Log.i("main", main.toString());
-				Log.i("id", json.getString("id"));
-				
-				_country.setText(sys.getString("country"));
-				
-				// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
-				Double temp = Double.parseDouble(main.getString("temp"));
-				temp = (temp - 273.15) * 1.8000 + 32.00;
-				BigDecimal bd = new BigDecimal(temp).setScale(2, RoundingMode.HALF_UP);
-				
-				_temp.setText(bd.toString());
-				_windSpeed.setText(wind.getString("speed"));
-				
-				_history.put(json.getString("id"), result);
-				FileManager.storeObjectFile(context, "history", _history, false);
-				*/
+				// Save array of JSON objects locally
+				jsonHashMap = new HashMap <String, String>();
+				jsonHashMap.put("list", list.toString());
+				Context context = getBaseContext(); 
+				FileManager.storeObjectFile(context, "forecast", jsonHashMap, false);
 				
 				message.arg1 = Activity.RESULT_OK;
 				message.obj = "Service is Done";
+				
+				try {
+					messenger.send(message);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			catch (Exception e) {
 				message.arg1 = Activity.RESULT_CANCELED;

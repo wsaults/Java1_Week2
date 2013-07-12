@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools" android:id="@+id/GridLayout1"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:columnCount="2" android:rowCount="2" android:orientation="horizontal"
+	tools:context=".GridXMLActivity">
+
+	<TextView android:id="@+id/dateLabel" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Date:" style="@style/TextView" />
+	
+	<TextView android:id="@+id/date" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="" style="@style/TextView" />
+
+	<TextView android:id="@+id/tempMax" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="High:" style="@style/TextView" />
+	
+	<TextView android:id="@+id/tempMaxLabel" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="" style="@style/TextView" />
+
+	<TextView android:id="@+id/tempMin" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Low:" style="@style/TextView" />
+	
+	<TextView android:id="@+id/tempMinLabel" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="" style="@style/TextView" />
+
+	<TextView android:id="@+id/description" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Weather:" style="@style/TextView" />
+	
+	<TextView android:id="@+id/descriptionLabel" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="" style="@style/TextView" />
+</GridLayout>

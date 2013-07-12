@@ -10,7 +10,13 @@
 package com.fullsail.java1project;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,16 +27,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.DataService;
 import com.fullsail.lib.FileManager;
+import com.fullsail.lib.ForecastDisplay;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -50,12 +62,10 @@ public class MainActivity extends Activity {
 	Context context = this;
 	Boolean connected = false;
 	HashMap<String, String> _history;
+	GridLayout forecastGridLayout;
 	
 	// Weather textviews
 	EditText _name;
-	EditText _country;
-	EditText _temp;
-	EditText _windSpeed;
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -84,13 +94,11 @@ public class MainActivity extends Activity {
 		// Add the Get button
 		Button button = (Button)findViewById(R.id.searchButton);
 		
+		_name = (EditText)findViewById(R.id.cityNameEditText);
+		
+		/*
 		// Add the POST button
 		Button submit = (Button)findViewById(R.id.submitButton);
-		
-		_name = (EditText)findViewById(R.id.cityNameEditText);
-		_country = (EditText)findViewById(R.id.countryEditText);
-		_temp = (EditText)findViewById(R.id.tempEditText);
-		_windSpeed = (EditText)findViewById(R.id.windEditText);
 		
 		submit.setOnClickListener(new View.OnClickListener() {
 			
@@ -116,6 +124,7 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+		*/
 		
 		// Button event handler
 		button.setOnClickListener(new View.OnClickListener() { 
@@ -136,6 +145,66 @@ public class MainActivity extends Activity {
 							}
 							
 							// TODO: do something with the response.
+							Log.i("response", response);
+//							LinearLayout subLayout = new LinearLayout(context);
+							
+							TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+
+							TableLayout tableLayout = new TableLayout(context);
+							tableLayout.setLayoutParams(layoutParams);
+							tableLayout.setShrinkAllColumns(true);
+
+							LinearLayout tableLL = (LinearLayout) findViewById(R.id.tableLayout);
+							tableLL.addView(tableLayout);
+							
+//							forecastGridLayout = new ForecastDisplay(context);
+							
+							JSONObject obj;
+							try {
+								obj = new JSONObject(getLocalForecast().toString());
+								JSONArray list = obj.getJSONArray("list");
+								for (int i = 0; i < list.length(); i++) {
+//									View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
+									Log.i("list obj", list.getJSONObject(i).toString());
+									
+									JSONObject json = list.getJSONObject(i);
+									JSONObject temp = json.getJSONObject("temp");
+									
+									/*
+									// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
+									Double max = Double.parseDouble(temp.getString("max"));
+									max = (max - 273.15) * 1.8000 + 32.00;
+									BigDecimal maxBd = new BigDecimal(max).setScale(2, RoundingMode.HALF_UP);
+									
+									Double min = Double.parseDouble(temp.getString("min"));
+									min = (min - 273.15) * 1.8000 + 32.00;
+									BigDecimal minBd = new BigDecimal(min).setScale(2, RoundingMode.HALF_UP);
+									*/
+									
+									JSONArray weather = json.getJSONArray("weather");
+									JSONObject weatherObj = weather.getJSONObject(0);
+									
+									TableRow tableRow = new TableRow(context);
+									tableRow.setLayoutParams(tableParams);
+									String dateHighLow = " Date: " + json.getString("dt") + " High: " + temp.getString("max") + "\n Low: " + temp.getString("min") + "\n";
+									TextView text1 = new TextView(context);
+									text1.setText(dateHighLow);
+									tableRow.addView(text1);
+									tableLayout.addView(tableRow);
+									
+									TableRow tableRow2 = new TableRow(context);
+									tableRow2.setLayoutParams(tableParams);
+									String desc = " | Weather: " + weatherObj.getString("description");
+									TextView text2 = new TextView(context);
+									text2.setText(desc);
+									tableRow.addView(text2);
+									
+									tableLayout.addView(tableRow2);
+								}
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 				};
@@ -168,7 +237,7 @@ public class MainActivity extends Activity {
 	 */
 	@SuppressWarnings("unchecked")
 	private HashMap<String, String> getHistory() {
-		Object stored = FileManager.readObjectgFile(context, "history", false);
+		Object stored = FileManager.readObjectFile(context, "history", false);
 		HashMap<String, String> history;
 		if (stored == null) {
 			Log.i("History","History is empty");
@@ -177,5 +246,18 @@ public class MainActivity extends Activity {
 			history = (HashMap<String, String>) stored;
 		}
 		return history;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private HashMap<String, String> getLocalForecast() {
+		Object stored = FileManager.readObjectFile(context, "forecast", false);
+		HashMap<String, String> forecast;
+		if (stored == null) {
+			Log.i("forecast","forecast is empty");
+			forecast = new HashMap<String, String>();
+		} else {
+			forecast = (HashMap<String, String>) stored;
+		}
+		return forecast;
 	}
 }

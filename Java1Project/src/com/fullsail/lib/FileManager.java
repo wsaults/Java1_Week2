@@ -101,7 +101,7 @@ public class FileManager {
 	}
 	
 	@SuppressWarnings("resource")
-	public static Object readObjectgFile(Context context, String filename, Boolean external) {
+	public static Object readObjectFile(Context context, String filename, Boolean external) {
 		Object content = new Object();
 		try {
 			File file;

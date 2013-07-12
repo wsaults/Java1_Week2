@@ -26,21 +26,24 @@ public final class R {
         public static final int wallpaper=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000b;
-        public static final int brandingImage=0x7f080000;
-        public static final int cityNameEditText=0x7f080002;
-        public static final int countryEditText=0x7f080005;
-        public static final int countryText=0x7f080004;
-        public static final int intoText=0x7f080001;
-        public static final int searchButton=0x7f080003;
-        public static final int submitButton=0x7f08000a;
-        public static final int tempEditText=0x7f080007;
-        public static final int tempText=0x7f080006;
-        public static final int windEditText=0x7f080009;
-        public static final int windSpeed=0x7f080008;
+        public static final int GridLayout1=0x7f080000;
+        public static final int action_settings=0x7f08000d;
+        public static final int brandingImage=0x7f080009;
+        public static final int cityNameEditText=0x7f08000a;
+        public static final int date=0x7f080002;
+        public static final int dateLabel=0x7f080001;
+        public static final int description=0x7f080007;
+        public static final int descriptionLabel=0x7f080008;
+        public static final int searchButton=0x7f08000b;
+        public static final int tableLayout=0x7f08000c;
+        public static final int tempMax=0x7f080003;
+        public static final int tempMaxLabel=0x7f080004;
+        public static final int tempMin=0x7f080005;
+        public static final int tempMinLabel=0x7f080006;
     }
     public static final class layout {
-        public static final int mainlayout=0x7f030000;
+        public static final int forecast_grid_layout=0x7f030000;
+        public static final int mainlayout=0x7f030001;
     }
     public static final class menu {
         public static final int main=0x7f070000;
