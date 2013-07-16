@@ -5,7 +5,7 @@
  * 
  * @author 	William Saults
  * 
- * date 	Jul 10, 2013
+ * date 	Jul 15, 2013
  */
 package com.fullsail.java1project;
 
@@ -62,6 +62,8 @@ public class MainActivity extends Activity {
 	
 	// Weather textviews
 	EditText _cityName;
+	JSONObject _weatherJson;
+	String _forecastString;
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -141,66 +143,9 @@ public class MainActivity extends Activity {
 								Log.e("", e.getMessage().toString());
 							}
 							
-							// Do something with the response.
+							// Parse the weather json object.
 							Log.i("response", response);
-							
-							TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-
-							TableLayout tableLayout = new TableLayout(context);
-							tableLayout.setLayoutParams(layoutParams);
-							tableLayout.setShrinkAllColumns(true);
-
-							LinearLayout tableLL = (LinearLayout) findViewById(R.id.tableLayout);
-							tableLL.addView(tableLayout);
-							
-//							forecastGridLayout = new ForecastDisplay(context);
-							
-							JSONObject obj;
-							try {
-								obj = new JSONObject(getLocalForecast().toString());
-								JSONArray list = obj.getJSONArray("list");
-								for (int i = 0; i < list.length(); i++) {
-//									View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
-									Log.i("list obj", list.getJSONObject(i).toString());
-									
-									JSONObject json = list.getJSONObject(i);
-									JSONObject temp = json.getJSONObject("temp");
-									
-									/*
-									// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
-									Double max = Double.parseDouble(temp.getString("max"));
-									max = (max - 273.15) * 1.8000 + 32.00;
-									BigDecimal maxBd = new BigDecimal(max).setScale(2, RoundingMode.HALF_UP);
-									
-									Double min = Double.parseDouble(temp.getString("min"));
-									min = (min - 273.15) * 1.8000 + 32.00;
-									BigDecimal minBd = new BigDecimal(min).setScale(2, RoundingMode.HALF_UP);
-									*/
-									
-									JSONArray weather = json.getJSONArray("weather");
-									JSONObject weatherObj = weather.getJSONObject(0);
-									
-									TableRow tableRow = new TableRow(context);
-									tableRow.setLayoutParams(tableParams);
-									String dateHighLow = " Date: " + json.getString("dt") + " High: " + temp.getString("max") + "\n Low: " + temp.getString("min") + "\n";
-									TextView text1 = new TextView(context);
-									text1.setText(dateHighLow);
-									tableRow.addView(text1);
-									tableLayout.addView(tableRow);
-									
-									TableRow tableRow2 = new TableRow(context);
-									tableRow2.setLayoutParams(tableParams);
-									String desc = " | Weather: " + weatherObj.getString("description");
-									TextView text2 = new TextView(context);
-									text2.setText(desc);
-									tableRow.addView(text2);
-									
-									tableLayout.addView(tableRow2);
-								}
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							parseWeatherJsonObject();
 						}
 					}
 				};
@@ -214,6 +159,65 @@ public class MainActivity extends Activity {
 				Log.i("Waiting on servie to end: ", "Waiting...");
 			}
 		});
+	}
+	
+	private void parseWeatherJsonObject() {
+		TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+
+		TableLayout tableLayout = new TableLayout(context);
+		tableLayout.setLayoutParams(layoutParams);
+		tableLayout.setShrinkAllColumns(true);
+
+		LinearLayout tableLL = (LinearLayout) findViewById(R.id.tableLayout);
+		tableLL.addView(tableLayout);
+		
+		JSONObject obj;
+		try {
+			_forecastString = getLocalForecast().toString();
+			obj = new JSONObject(_forecastString);
+			JSONArray list = obj.getJSONArray("list");
+			for (int i = 0; i < list.length(); i++) {
+//				View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
+				Log.i("list obj", list.getJSONObject(i).toString());
+				
+				JSONObject json = list.getJSONObject(i);
+				JSONObject temp = json.getJSONObject("temp");
+				
+				/*
+				// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
+				Double max = Double.parseDouble(temp.getString("max"));
+				max = (max - 273.15) * 1.8000 + 32.00;
+				BigDecimal maxBd = new BigDecimal(max).setScale(2, RoundingMode.HALF_UP);
+				
+				Double min = Double.parseDouble(temp.getString("min"));
+				min = (min - 273.15) * 1.8000 + 32.00;
+				BigDecimal minBd = new BigDecimal(min).setScale(2, RoundingMode.HALF_UP);
+				*/
+				
+				JSONArray weather = json.getJSONArray("weather");
+				JSONObject weatherObj = weather.getJSONObject(0);
+				
+				TableRow tableRow = new TableRow(context);
+				tableRow.setLayoutParams(tableParams);
+				String dateHighLow = " Date: " + json.getString("dt") + " High: " + temp.getString("max") + "\n Low: " + temp.getString("min") + "\n";
+				TextView text1 = new TextView(context);
+				text1.setText(dateHighLow);
+				tableRow.addView(text1);
+				tableLayout.addView(tableRow);
+				
+				TableRow tableRow2 = new TableRow(context);
+				tableRow2.setLayoutParams(tableParams);
+				String desc = " | Weather: " + weatherObj.getString("description");
+				TextView text2 = new TextView(context);
+				text2.setText(desc);
+				tableRow.addView(text2);
+				
+				tableLayout.addView(tableRow2);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -244,6 +248,11 @@ public class MainActivity extends Activity {
 		return history;
 	}
 	
+	/**
+	 * Gets the local forecast.
+	 *
+	 * @return the local forecast
+	 */
 	@SuppressWarnings("unchecked")
 	private HashMap<String, String> getLocalForecast() {
 		Object stored = FileManager.readObjectFile(context, "forecast", false);
@@ -257,21 +266,35 @@ public class MainActivity extends Activity {
 		return forecast;
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
+	 */
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {    
 		// Save the form information.
 		 savedInstanceState.putString("cityName", _cityName.getText().toString());
+		 savedInstanceState.putString("forecastString", _forecastString);
 		 
 		// Always call the superclass so it can save the view hierarchy state
 		super.onSaveInstanceState(savedInstanceState);
 	};
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onRestoreInstanceState(android.os.Bundle)
+	 */
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 	    // Always call the superclass so it can restore the view hierarchy
 	    super.onRestoreInstanceState(savedInstanceState);
 	   
 	    // Restore state members from saved instance
-	    _cityName.setText(savedInstanceState.getString("cityName"));
+	    if (_cityName.toString().length() == 0) {
+	    	_cityName.setText(savedInstanceState.getString("cityName"));
+	    }
+	    _forecastString = savedInstanceState.getString("forecastString");
+	    
+	    if (_forecastString.length() > 0) {
+	    	parseWeatherJsonObject();
+	    }
 	}
 }
