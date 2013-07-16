@@ -27,10 +27,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -42,7 +40,6 @@ import android.widget.TextView;
 import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.DataService;
 import com.fullsail.lib.FileManager;
-import com.fullsail.lib.ForecastDisplay;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -58,20 +55,20 @@ public class MainActivity extends Activity {
 	// Variables
 	LinearLayout linearLayout;
 	LinearLayout.LayoutParams layoutParams;
-	TextView textView;
 	Context context = this;
 	Boolean connected = false;
 	HashMap<String, String> _history;
 	GridLayout forecastGridLayout;
 	
 	// Weather textviews
-	EditText _name;
+	EditText _cityName;
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// Always call the superclass first
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.mainlayout);
@@ -94,7 +91,7 @@ public class MainActivity extends Activity {
 		// Add the Get button
 		Button button = (Button)findViewById(R.id.searchButton);
 		
-		_name = (EditText)findViewById(R.id.cityNameEditText);
+		_cityName = (EditText)findViewById(R.id.cityNameEditText);
 		
 		/*
 		// Add the POST button
@@ -135,7 +132,7 @@ public class MainActivity extends Activity {
 
 					@Override
 					public void handleMessage(Message msg) {
-						// TODO Auto-generated method stub
+						// Use the respose to populate the weather data table.
 						String response = null;
 						if (msg.arg1 == RESULT_OK && msg.obj != null) {
 							try {
@@ -144,9 +141,8 @@ public class MainActivity extends Activity {
 								Log.e("", e.getMessage().toString());
 							}
 							
-							// TODO: do something with the response.
+							// Do something with the response.
 							Log.i("response", response);
-//							LinearLayout subLayout = new LinearLayout(context);
 							
 							TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
@@ -212,7 +208,7 @@ public class MainActivity extends Activity {
 				Messenger dataMessenger = new Messenger(dataServieHandler);
 				Intent startDataServiceIntent = new Intent(context, DataService.class);
 				startDataServiceIntent.putExtra(DataService.MESSENGER_KEY, dataMessenger);
-				startDataServiceIntent.putExtra(DataService.CITY_KEY, _name.getText().toString());
+				startDataServiceIntent.putExtra(DataService.CITY_KEY, _cityName.getText().toString());
 				startService(startDataServiceIntent);
 				
 				Log.i("Waiting on servie to end: ", "Waiting...");
@@ -259,5 +255,23 @@ public class MainActivity extends Activity {
 			forecast = (HashMap<String, String>) stored;
 		}
 		return forecast;
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {    
+		// Save the form information.
+		 savedInstanceState.putString("cityName", _cityName.getText().toString());
+		 
+		// Always call the superclass so it can save the view hierarchy state
+		super.onSaveInstanceState(savedInstanceState);
+	};
+	
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+	    // Always call the superclass so it can restore the view hierarchy
+	    super.onRestoreInstanceState(savedInstanceState);
+	   
+	    // Restore state members from saved instance
+	    _cityName.setText(savedInstanceState.getString("cityName"));
 	}
 }
