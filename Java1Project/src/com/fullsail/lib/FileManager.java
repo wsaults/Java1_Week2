@@ -130,4 +130,36 @@ public class FileManager {
 		}
 		return content;
 	}
+	
+	@SuppressWarnings("resource")
+	public static void deleteObjectFile(Context context, String filename, Boolean external) {
+		Object content = new Object();
+		try {
+			File file;
+			FileInputStream fin;
+			if (external) {
+				file = new File(context.getExternalFilesDir(null), filename);
+				fin = new FileInputStream(file);
+			} else {
+				file = new File(filename);
+				fin = context.openFileInput(filename);
+			}
+			
+			ObjectInputStream ois = new ObjectInputStream(fin);
+			try {
+				content = (Object) ois.readObject();
+				if (content != null) {
+					context.deleteFile(filename);
+				}
+			} catch (ClassNotFoundException e) {
+				Log.e("Read error", "Invalid Java object file");
+			}
+			ois.close();
+			fin.close();
+		} catch (FileNotFoundException e) {
+			Log.e("Read error", "File not found " + filename);
+		} catch (IOException e) {
+			Log.e("Read error", "I/O Error");
+		}
+	}
 }

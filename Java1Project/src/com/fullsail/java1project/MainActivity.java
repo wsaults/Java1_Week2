@@ -175,44 +175,46 @@ public class MainActivity extends Activity {
 		try {
 			_forecastString = getLocalForecast().toString();
 			obj = new JSONObject(_forecastString);
-			JSONArray list = obj.getJSONArray("list");
-			for (int i = 0; i < list.length(); i++) {
-//				View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
-				Log.i("list obj", list.getJSONObject(i).toString());
-				
-				JSONObject json = list.getJSONObject(i);
-				JSONObject temp = json.getJSONObject("temp");
-				
-				/*
-				// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
-				Double max = Double.parseDouble(temp.getString("max"));
-				max = (max - 273.15) * 1.8000 + 32.00;
-				BigDecimal maxBd = new BigDecimal(max).setScale(2, RoundingMode.HALF_UP);
-				
-				Double min = Double.parseDouble(temp.getString("min"));
-				min = (min - 273.15) * 1.8000 + 32.00;
-				BigDecimal minBd = new BigDecimal(min).setScale(2, RoundingMode.HALF_UP);
-				*/
-				
-				JSONArray weather = json.getJSONArray("weather");
-				JSONObject weatherObj = weather.getJSONObject(0);
-				
-				TableRow tableRow = new TableRow(context);
-				tableRow.setLayoutParams(tableParams);
-				String dateHighLow = " Date: " + json.getString("dt") + " High: " + temp.getString("max") + "\n Low: " + temp.getString("min") + "\n";
-				TextView text1 = new TextView(context);
-				text1.setText(dateHighLow);
-				tableRow.addView(text1);
-				tableLayout.addView(tableRow);
-				
-				TableRow tableRow2 = new TableRow(context);
-				tableRow2.setLayoutParams(tableParams);
-				String desc = " | Weather: " + weatherObj.getString("description");
-				TextView text2 = new TextView(context);
-				text2.setText(desc);
-				tableRow.addView(text2);
-				
-				tableLayout.addView(tableRow2);
+			if (obj != null) {
+				JSONArray list = obj.getJSONArray("list");
+				for (int i = 0; i < list.length(); i++) {
+//					View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
+					Log.i("list obj", list.getJSONObject(i).toString());
+					
+					JSONObject json = list.getJSONObject(i);
+					JSONObject temp = json.getJSONObject("temp");
+					
+					/*
+					// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
+					Double max = Double.parseDouble(temp.getString("max"));
+					max = (max - 273.15) * 1.8000 + 32.00;
+					BigDecimal maxBd = new BigDecimal(max).setScale(2, RoundingMode.HALF_UP);
+					
+					Double min = Double.parseDouble(temp.getString("min"));
+					min = (min - 273.15) * 1.8000 + 32.00;
+					BigDecimal minBd = new BigDecimal(min).setScale(2, RoundingMode.HALF_UP);
+					*/
+					
+					JSONArray weather = json.getJSONArray("weather");
+					JSONObject weatherObj = weather.getJSONObject(0);
+					
+					TableRow tableRow = new TableRow(context);
+					tableRow.setLayoutParams(tableParams);
+					String dateHighLow = " Date: " + json.getString("dt") + " High: " + temp.getString("max") + "\n Low: " + temp.getString("min") + "\n";
+					TextView text1 = new TextView(context);
+					text1.setText(dateHighLow);
+					tableRow.addView(text1);
+					tableLayout.addView(tableRow);
+					
+					TableRow tableRow2 = new TableRow(context);
+					tableRow2.setLayoutParams(tableParams);
+					String desc = " | Weather: " + weatherObj.getString("description");
+					TextView text2 = new TextView(context);
+					text2.setText(desc);
+					tableRow.addView(text2);
+					
+					tableLayout.addView(tableRow2);
+				}
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -291,10 +293,14 @@ public class MainActivity extends Activity {
 	    if (_cityName.toString().length() == 0) {
 	    	_cityName.setText(savedInstanceState.getString("cityName"));
 	    }
-	    _forecastString = savedInstanceState.getString("forecastString");
 	    
-	    if (_forecastString.length() > 0) {
-	    	parseWeatherJsonObject();
-	    }
+	    parseWeatherJsonObject();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		FileManager.deleteObjectFile(context, "forecast", false);
 	}
 }
