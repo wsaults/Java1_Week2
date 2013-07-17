@@ -132,7 +132,7 @@ public class ForecastProvider extends ContentProvider {
 			for (int i = 0; i < list.length(); i++) {
 				//				View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
 				try {
-					Log.i("list obj", list.getJSONObject(i).toString());
+//					Log.i("list obj", list.getJSONObject(i).toString());
 
 					JSONObject json = list.getJSONObject(i);
 					date = json.getString("dt");

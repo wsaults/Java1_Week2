@@ -150,16 +150,19 @@ public class MainActivity extends Activity {
 							
 							ForecastProvider provider = new ForecastProvider();
 							Cursor cursor = provider.query(ForecastProvider.CONTENT_URI, ForecastProvider.PROJETION, null, null, "ASC");
-							
 							if (cursor != null) {
-								Log.e("Cursor count", String.valueOf(cursor.getCount()));
+								Log.i("Cursor count", String.valueOf(cursor.getCount()));
 								
 								if (cursor.moveToFirst() == true) {
 									for (int i = 0; i < cursor.getCount(); i++) {
-										cursor.moveToNext();
+										while (cursor.moveToNext()) {
+											Log.i("Cursor string", cursor.getString(cursor.getColumnIndex(ForecastProvider.DATE_COLUMN)));
+										}
+//										cursor.moveToNext();
 										// add element to display
 									}
 								}
+								cursor.close();
 							}
 							
 //							parseWeatherJsonObject(); // the parsing will be handled by the content provider.
