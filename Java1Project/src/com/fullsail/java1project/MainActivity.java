@@ -301,6 +301,6 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		FileManager.deleteObjectFile(context, "forecast", false);
+//		FileManager.deleteObjectFile(context, "forecast", false);
 	}
 }

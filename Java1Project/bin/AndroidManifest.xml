@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <service android:name="com.fullsail.lib.DataService"></service>
+        <provider android:name="com.fullsail.lib.ForecastProvider" android:authorities='com.fullsail.lib.forecastprovider' android:exported="true"></provider>
     </application>
 
 </manifest>

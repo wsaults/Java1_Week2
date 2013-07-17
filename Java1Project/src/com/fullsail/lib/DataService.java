@@ -42,8 +42,12 @@ import android.util.Log;
  */
 public class DataService extends IntentService {
 	
+	public static final String FORECAST_TEXT_FILENAME = "forecastText";
+	public static final String FORECAST_OBJECT_FILENAME = "forecast";
+	
 	public static final String MESSENGER_KEY = "messenger";
 	public static final String CITY_KEY = "city";
+	
 	Messenger messenger;
 	Message message;
 	HashMap <String, String> jsonHashMap;
@@ -161,6 +165,10 @@ public class DataService extends IntentService {
 		protected void onPostExecute(String result) {
 			//start preparing result string for display
 			try {
+				// Store the JSON string in text file.
+				Context context = getBaseContext();
+				FileManager.storeStringFile(context,FORECAST_TEXT_FILENAME, result, false);
+				
 				//get JSONObject from result
 				JSONObject json = new JSONObject(result);
 				JSONArray list = json.getJSONArray("list");
@@ -171,9 +179,8 @@ public class DataService extends IntentService {
 				
 				// Save array of JSON objects locally
 				jsonHashMap = new HashMap <String, String>();
-				jsonHashMap.put("list", list.toString());
-				Context context = getBaseContext(); 
-				FileManager.storeObjectFile(context, "forecast", jsonHashMap, false);
+				jsonHashMap.put("list", list.toString()); 
+				FileManager.storeObjectFile(context, FORECAST_OBJECT_FILENAME, jsonHashMap, false);
 				
 				message.arg1 = Activity.RESULT_OK;
 				message.obj = "Service is Done";
