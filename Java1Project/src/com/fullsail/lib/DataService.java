@@ -42,7 +42,7 @@ import android.util.Log;
  */
 public class DataService extends IntentService {
 	
-	public static final String FORECAST_TEXT_FILENAME = "forecastText";
+	public static final String FORECAST_TEXT_FILENAME = "forecastText.txt";
 	public static final String FORECAST_OBJECT_FILENAME = "forecast";
 	
 	public static final String MESSENGER_KEY = "messenger";
@@ -56,6 +56,7 @@ public class DataService extends IntentService {
 	public static String JSON_MIN = "min";
 	public static String JSON_DESCRIPTION = "description";
 	
+	public static Context _context;
 	Messenger messenger;
 	Message message;
 	HashMap <String, String> jsonHashMap;
@@ -174,8 +175,8 @@ public class DataService extends IntentService {
 			//start preparing result string for display
 			try {
 				// Store the JSON string in text file.
-				Context context = getBaseContext();
-				FileManager.storeStringFile(context,FORECAST_TEXT_FILENAME, result, false);
+				_context = getBaseContext();
+				FileManager.storeStringFile(_context,FORECAST_TEXT_FILENAME, result, false);
 				
 				/*
 				 * Commented out the following because I switched to a JSON text file.

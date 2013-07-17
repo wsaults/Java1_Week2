@@ -9,6 +9,8 @@
  */
 package com.fullsail.lib;
 
+import java.io.IOException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,7 +101,13 @@ public class ForecastProvider extends ContentProvider {
 		MatrixCursor result = new MatrixCursor(PROJETION);
 		
 		// Make sure there is something to return.
-		String JSONString = FileManager.readStringFile(getContext(), DataService.FORECAST_TEXT_FILENAME, false);
+		String JSONString = null;
+		try {
+			JSONString = FileManager.readStringFile(DataService.FORECAST_TEXT_FILENAME);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		JSONObject obj = null;
 		JSONArray list = null;
 		String date = null;
@@ -107,30 +115,6 @@ public class ForecastProvider extends ContentProvider {
 			obj = new JSONObject(JSONString);
 			if (obj != null) {
 				list = obj.getJSONArray("list");
-				for (int i = 0; i < list.length(); i++) {
-//					View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
-					Log.i("list obj", list.getJSONObject(i).toString());
-					
-					JSONObject json = list.getJSONObject(i);
-					JSONObject temp = json.getJSONObject("temp");
-					
-					/*
-					// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
-					Double max = Double.parseDouble(temp.getString("max"));
-					max = (max - 273.15) * 1.8000 + 32.00;
-					BigDecimal maxBd = new BigDecimal(max).setScale(2, RoundingMode.HALF_UP);
-					
-					Double min = Double.parseDouble(temp.getString("min"));
-					min = (min - 273.15) * 1.8000 + 32.00;
-					BigDecimal minBd = new BigDecimal(min).setScale(2, RoundingMode.HALF_UP);
-					*/
-					
-					JSONArray weather = json.getJSONArray("weather");
-					JSONObject weatherObj = weather.getJSONObject(0);
-					
-					String dateHighLow = " Date: " + json.getString("dt") + " High: " + temp.getString("max") + "\n Low: " + temp.getString("min") + "\n";
-					String desc = " | Weather: " + weatherObj.getString("description");
-				}
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

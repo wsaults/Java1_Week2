@@ -10,13 +10,17 @@
 package com.fullsail.lib;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import com.fullsail.java1project.MainActivity;
 
 import android.content.Context;
 import android.util.Log;
@@ -68,19 +72,12 @@ public class FileManager {
 		return true;
 	}
 	
-	@SuppressWarnings("resource")
-	public static String readStringFile(Context context, String filename, Boolean external) {
+	public static String readStringFile(String filename) throws IOException {
+		Context context = DataService._context;
 		String content = "";
 		try {
-			File file;
 			FileInputStream fin;
-			if (external) {
-				file = new File(context.getExternalFilesDir(null), filename);
-				fin = new FileInputStream(file);
-			} else {
-				file = new File(filename);
-				fin = context.openFileInput(filename);
-			}
+			fin = context.openFileInput(filename);
 			BufferedInputStream bin = new BufferedInputStream(fin);
 			byte[] contentBytes = new byte[1024];
 			int bytesRead = 0;
