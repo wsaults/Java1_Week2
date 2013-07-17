@@ -26,6 +26,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -40,6 +41,7 @@ import android.widget.TextView;
 import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.DataService;
 import com.fullsail.lib.FileManager;
+import com.fullsail.lib.ForecastProvider;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -145,7 +147,22 @@ public class MainActivity extends Activity {
 							
 							// Parse the weather json object.
 							Log.i("response", response);
-							parseWeatherJsonObject();
+							
+							ForecastProvider provider = new ForecastProvider();
+							Cursor cursor = provider.query(ForecastProvider.CONTENT_URI, ForecastProvider.PROJETION, null, null, "ASC");
+							
+							if (cursor != null) {
+								Log.e("Cursor count", String.valueOf(cursor.getCount()));
+								
+								if (cursor.moveToFirst() == true) {
+									for (int i = 0; i < cursor.getCount(); i++) {
+										cursor.moveToNext();
+										// add element to display
+									}
+								}
+							}
+							
+//							parseWeatherJsonObject(); // the parsing will be handled by the content provider.
 						}
 					}
 				};

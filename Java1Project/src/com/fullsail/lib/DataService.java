@@ -48,6 +48,14 @@ public class DataService extends IntentService {
 	public static final String MESSENGER_KEY = "messenger";
 	public static final String CITY_KEY = "city";
 	
+	public static String JSON_LIST = "list";
+	public static String JSON_TEMP = "temp";
+	public static String JSON_WEATHER = "weather";
+	public static String JSON_DATE = "dt";
+	public static String JSON_MAX = "max";
+	public static String JSON_MIN = "min";
+	public static String JSON_DESCRIPTION = "description";
+	
 	Messenger messenger;
 	Message message;
 	HashMap <String, String> jsonHashMap;
@@ -169,6 +177,9 @@ public class DataService extends IntentService {
 				Context context = getBaseContext();
 				FileManager.storeStringFile(context,FORECAST_TEXT_FILENAME, result, false);
 				
+				/*
+				 * Commented out the following because I switched to a JSON text file.
+				 * 
 				//get JSONObject from result
 				JSONObject json = new JSONObject(result);
 				JSONArray list = json.getJSONArray("list");
@@ -181,6 +192,7 @@ public class DataService extends IntentService {
 				jsonHashMap = new HashMap <String, String>();
 				jsonHashMap.put("list", list.toString()); 
 				FileManager.storeObjectFile(context, FORECAST_OBJECT_FILENAME, jsonHashMap, false);
+				*/
 				
 				message.arg1 = Activity.RESULT_OK;
 				message.obj = "Service is Done";

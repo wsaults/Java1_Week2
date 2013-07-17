@@ -9,6 +9,10 @@
  */
 package com.fullsail.lib;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -16,6 +20,10 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
+import android.widget.TableRow;
+import android.widget.TextView;
+
 import com.fullsail.lib.FileManager;
 import com.fullsail.lib.DataService;
 
@@ -26,17 +34,18 @@ import com.fullsail.lib.DataService;
 public class ForecastProvider extends ContentProvider {
 	
 	public static final String AUTHORITY = "com.fullsail.lib.forecastprovider";
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/items");
+	
+	// Columns
+			public static final String DATE_COLUMN = "date";
+	
+	// Projection
+			public static final String[] PROJETION = {"_id", DATE_COLUMN};
 	
 	public static class ForecastData implements BaseColumns {
-		public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/items");
+		
 		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.fullsail.lib.item";
 		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.fullsail.lib.item";
-		
-		// Columns
-		public static final String DATE_COLUMN = "dt";
-		
-		// Projection
-		public static final String[] PROJETION = {"_id", DATE_COLUMN};
 		
 		private ForecastData() {};
 	}
@@ -87,19 +96,88 @@ public class ForecastProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		
-		MatrixCursor result = new MatrixCursor(ForecastData.PROJETION);
+		MatrixCursor result = new MatrixCursor(PROJETION);
 		
 		// Make sure there is something to return.
 		String JSONString = FileManager.readStringFile(getContext(), DataService.FORECAST_TEXT_FILENAME, false);
+		JSONObject obj = null;
+		JSONArray list = null;
+		String date = null;
+		try {
+			obj = new JSONObject(JSONString);
+			if (obj != null) {
+				list = obj.getJSONArray("list");
+				for (int i = 0; i < list.length(); i++) {
+//					View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
+					Log.i("list obj", list.getJSONObject(i).toString());
+					
+					JSONObject json = list.getJSONObject(i);
+					JSONObject temp = json.getJSONObject("temp");
+					
+					/*
+					// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
+					Double max = Double.parseDouble(temp.getString("max"));
+					max = (max - 273.15) * 1.8000 + 32.00;
+					BigDecimal maxBd = new BigDecimal(max).setScale(2, RoundingMode.HALF_UP);
+					
+					Double min = Double.parseDouble(temp.getString("min"));
+					min = (min - 273.15) * 1.8000 + 32.00;
+					BigDecimal minBd = new BigDecimal(min).setScale(2, RoundingMode.HALF_UP);
+					*/
+					
+					JSONArray weather = json.getJSONArray("weather");
+					JSONObject weatherObj = weather.getJSONObject(0);
+					
+					String dateHighLow = " Date: " + json.getString("dt") + " High: " + temp.getString("max") + "\n Low: " + temp.getString("min") + "\n";
+					String desc = " | Weather: " + weatherObj.getString("description");
+				}
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// If the list is null then just return the empty result
+		if (list == null) {
+			return result;
+		}
+		
 		
 		switch (uriMatcher.match(uri)) {
 		case ITEMS:
-			return ForecastData.CONTENT_TYPE;
+			for (int i = 0; i < list.length(); i++) {
+				//				View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
+				try {
+					Log.i("list obj", list.getJSONObject(i).toString());
 
+					JSONObject json = list.getJSONObject(i);
+					date = json.getString("dt");
+					// just adding the date to the row for now.
+					// see 8:20 in video 2
+					result.addRow(new Object[] { i + 1, date});
+					/*
+					JSONObject temp = json.getJSONObject("temp");
+					JSONArray weather = json.getJSONArray("weather");
+					JSONObject weatherObj = weather.getJSONObject(0);
+					String dateHighLow = " Date: " + json.getString("dt") + " High: " + temp.getString("max") + "\n Low: " + temp.getString("min") + "\n";
+					String desc = " | Weather: " + weatherObj.getString("description");
+					*/
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			break;
+			
 		case ITEMS_ID:
-			return ForecastData.CONTENT_ITEM_TYPE;
+			// Leaving this here for future use.
+			break;
+			
+		default:
+			break;
 		}
-		return null;
+		
+		return result;
 	}
 	
 	
