@@ -40,13 +40,12 @@ public class ForecastProvider extends ContentProvider {
 	
 	// Columns
 			public static final String DATE_COLUMN = "date";
-			public static final String TEMP_COLUMN = "temp";
 			public static final String WEATHER_COLUMN = "weather";
 			public static final String MAX_COLUMN = "max";
 			public static final String MIN_COLUMN = "min";
 	
 	// Projection
-			public static final String[] PROJETION = {"_id", DATE_COLUMN};
+			public static final String[] PROJETION = {"_id", DATE_COLUMN, MAX_COLUMN, MIN_COLUMN};
 	
 	public static class ForecastData implements BaseColumns {
 		
@@ -115,6 +114,9 @@ public class ForecastProvider extends ContentProvider {
 		JSONObject obj = null;
 		JSONArray list = null;
 		String date = null;
+		String weather = null;
+		String max = null;
+		String min = null;
 		try {
 			obj = new JSONObject(JSONString);
 			if (obj != null) {
@@ -134,15 +136,16 @@ public class ForecastProvider extends ContentProvider {
 		switch (uriMatcher.match(uri)) {
 		case ITEMS:
 			for (int i = 0; i < list.length(); i++) {
-				//				View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
 				try {
 //					Log.i("list obj", list.getJSONObject(i).toString());
 
 					JSONObject json = list.getJSONObject(i);
 					date = json.getString("dt");
-					// just adding the date to the row for now.
+					JSONObject temp = json.getJSONObject("temp");
+					max = temp.getString("max");
+					min = temp.getString("min");
 					// see 8:20 in video 2
-					result.addRow(new Object[] { i + 1, date});
+					result.addRow(new Object[] { i + 1, date, max, min});
 					/*
 					JSONObject temp = json.getJSONObject("temp");
 					JSONArray weather = json.getJSONArray("weather");
