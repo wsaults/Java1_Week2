@@ -22,9 +22,6 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.fullsail.lib.FileManager;
 import com.fullsail.lib.DataService;
@@ -114,7 +111,7 @@ public class ForecastProvider extends ContentProvider {
 		JSONObject obj = null;
 		JSONArray list = null;
 		String date = null;
-		String weather = null;
+//		String weather = null; Will use in the future to display the weather description.
 		String max = null;
 		String min = null;
 		try {

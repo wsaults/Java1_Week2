@@ -10,12 +10,9 @@
 package com.fullsail.java1project;
 
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +27,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -48,7 +44,6 @@ import com.fullsail.lib.FileManager;
 import com.fullsail.lib.ForecastProvider;
 
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 
 // TODO: Auto-generated Javadoc
@@ -178,6 +173,7 @@ public class MainActivity extends Activity {
 			tableLayout.removeAllViews();
 		}
 		
+		// Build a table for the rows.
 		TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
 		tableLayout = new TableLayout(context);
