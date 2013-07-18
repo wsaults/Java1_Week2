@@ -12,6 +12,8 @@ package com.fullsail.java1project;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -27,6 +29,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -134,6 +137,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Handler dataServieHandler = new Handler() {
 
+					@SuppressLint("SimpleDateFormat")
 					@Override
 					public void handleMessage(Message msg) {
 						// Use the respose to populate the weather data table.
@@ -148,6 +152,15 @@ public class MainActivity extends Activity {
 							// Parse the weather json object.
 							Log.i("response", response);
 							
+							TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+
+							TableLayout tableLayout = new TableLayout(context);
+							tableLayout.setLayoutParams(layoutParams);
+							tableLayout.setShrinkAllColumns(true);
+
+							LinearLayout tableLL = (LinearLayout) findViewById(R.id.tableLayout);
+							tableLL.addView(tableLayout);
+							
 							ForecastProvider provider = new ForecastProvider();
 							Cursor cursor = provider.query(ForecastProvider.CONTENT_URI, ForecastProvider.PROJETION, null, null, "ASC");
 							if (cursor != null) {
@@ -156,9 +169,22 @@ public class MainActivity extends Activity {
 								if (cursor.moveToFirst() == true) {
 									for (int i = 0; i < cursor.getCount(); i++) {
 										while (cursor.moveToNext()) {
-											Log.i("Cursor string", cursor.getString(cursor.getColumnIndex(ForecastProvider.DATE_COLUMN)));
+//											Log.i("Cursor string", cursor.getString(cursor.getColumnIndex(ForecastProvider.DATE_COLUMN)));
+											
+											//Display the forecast date.
+											String dateString = cursor.getString(cursor.getColumnIndex(ForecastProvider.DATE_COLUMN));
+											Date date = new Date(Long.parseLong(dateString) * 1000);
+											SimpleDateFormat df = new SimpleDateFormat("MM-dd");
+											String dateText = df.format(date);
+											
+											TableRow tableRow = new TableRow(context);
+											tableRow.setLayoutParams(tableParams);
+											String dateHighLow = " " + dateText + " " + " \n";
+											TextView text1 = new TextView(context);
+											text1.setText(dateHighLow);
+											tableRow.addView(text1);
+											tableLayout.addView(tableRow);
 										}
-//										cursor.moveToNext();
 										// add element to display
 									}
 								}

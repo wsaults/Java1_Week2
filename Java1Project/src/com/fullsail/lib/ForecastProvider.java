@@ -40,6 +40,10 @@ public class ForecastProvider extends ContentProvider {
 	
 	// Columns
 			public static final String DATE_COLUMN = "date";
+			public static final String TEMP_COLUMN = "temp";
+			public static final String WEATHER_COLUMN = "weather";
+			public static final String MAX_COLUMN = "max";
+			public static final String MIN_COLUMN = "min";
 	
 	// Projection
 			public static final String[] PROJETION = {"_id", DATE_COLUMN};
