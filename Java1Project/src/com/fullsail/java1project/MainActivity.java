@@ -15,6 +15,7 @@ import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,10 +66,11 @@ public class MainActivity extends Activity {
 	HashMap<String, String> _history;
 	GridLayout forecastGridLayout;
 	
-	// Weather textviews
+	// Weather
 	EditText _cityName;
 	JSONObject _weatherJson;
 	String _forecastString;
+	TableLayout tableLayout;
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -171,9 +173,14 @@ public class MainActivity extends Activity {
 	
 	@SuppressLint("SimpleDateFormat")
 	private void displayWeatherProvider() {
+		if (tableLayout != null) {
+			// Remove any existing rows from the table.
+			tableLayout.removeAllViews();
+		}
+		
 		TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
-		TableLayout tableLayout = new TableLayout(context);
+		tableLayout = new TableLayout(context);
 		tableLayout.setLayoutParams(layoutParams);
 		tableLayout.setShrinkAllColumns(true);
 

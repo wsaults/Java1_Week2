@@ -132,7 +132,6 @@ public class ForecastProvider extends ContentProvider {
 			return result;
 		}
 		
-		
 		switch (uriMatcher.match(uri)) {
 		case ITEMS:
 			for (int i = 0; i < list.length(); i++) {
@@ -179,7 +178,8 @@ public class ForecastProvider extends ContentProvider {
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		Cursor cursor = query(ForecastProvider.CONTENT_URI, ForecastProvider.PROJETION, null, null, "ASC");
+		return cursor.getCount();
 	}
 	
 	/* (non-Javadoc)
