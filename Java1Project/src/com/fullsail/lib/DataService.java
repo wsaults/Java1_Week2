@@ -23,6 +23,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.fullsail.java1project.MainActivity;
+
 import android.app.Activity;
 import android.app.IntentService;
 import android.content.Context;
@@ -81,7 +83,7 @@ public class DataService extends IntentService {
 		String city = extras.getString(CITY_KEY);
 		message = Message.obtain();
 		
-		if	(Connectivity.getConnectionStatus(this)) {
+		if	(MainActivity.connected) {
 			// Build the url
 			try{
 				String input = (city.equals("")) ? "Dallas" : city;
@@ -100,7 +102,8 @@ public class DataService extends IntentService {
 				e.printStackTrace(); 
 			}
 		} else {
-			Log.i("Network Connection", Connectivity.getConnectionType(this));
+			
+			
 			// Fetch the json data from the data file
 			try {
 				String json = FetchJsonData.jsonToStringFromAssetFolder("data.json", getBaseContext());

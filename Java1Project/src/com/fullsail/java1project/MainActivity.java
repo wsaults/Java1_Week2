@@ -24,7 +24,9 @@ import android.os.Message;
 import android.os.Messenger;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
@@ -57,7 +59,7 @@ public class MainActivity extends Activity {
 	LinearLayout linearLayout;
 	LinearLayout.LayoutParams layoutParams;
 	Context context = this;
-	Boolean connected = false;
+	public static Boolean connected = false;
 	HashMap<String, String> _history;
 	GridLayout forecastGridLayout;
 	
@@ -79,10 +81,21 @@ public class MainActivity extends Activity {
 		
 		Parse.initialize(this, "6WphHpeWQJxN6LcsjSME5SuDJNByUgWcp4HutqIG", "QiICRS6hDy2RqJavJXbZm0n5yFlNYhDOBW8MPKRi"); 
 		
-		_history = getHistory();
+//		_history = getHistory();
 		
 		// Test Network Connetion
 		connected = Connectivity.getConnectionStatus(context);
+		connected = Connectivity.getConnectionStatus(context);
+		if (!connected) {
+			// Alert the user that there is no internet connection			
+			new AlertDialog.Builder(context)
+			.setTitle("Warning")
+			.setMessage("Cound not connect to the internet")
+			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {}
+			})
+			.show();
+		}
 		
 		// Setup a linear layout
 		linearLayout = new LinearLayout(this);
@@ -105,7 +118,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				if	(connected) {
+				if	(DataService.isNetworkAvailable()) {
 					// Send the data to parse
 					try {						
 						if(_name.getText().toString().equals("")) return;
@@ -121,6 +134,17 @@ public class MainActivity extends Activity {
 						e.printStackTrace(); 
 					}
 				} else {
+					// Alert the user that there is no internet connection
+					new AlertDialog.Builder(this)
+		    		.setTitle("Warning")
+		    		.setMessage("Cound not connect to the internet")
+		    		.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		        		public void onClick(DialogInterface dialog, int which) { 
+		            	// continue with delete
+		        		}
+		     		})
+		     		.show();
+				
 					Log.i("Network Connection", Connectivity.getConnectionType(context));	
 				}
 			}
@@ -151,6 +175,14 @@ public class MainActivity extends Activity {
 							
 							displayWeatherProvider();
 //							parseWeatherJsonObject(); // the parsing will be handled by the content provider.
+						} else if (msg.arg1 == RESULT_CANCELED) {
+							new AlertDialog.Builder(context)
+							.setTitle("Warning")
+							.setMessage("Cound not connect to the internet")
+							.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {}
+							})
+							.show();
 						}
 					}
 				};
@@ -295,7 +327,7 @@ public class MainActivity extends Activity {
 	 *
 	 * @return the history
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private HashMap<String, String> getHistory() {
 		Object stored = FileManager.readObjectFile(context, "history", false);
 		HashMap<String, String> history;
