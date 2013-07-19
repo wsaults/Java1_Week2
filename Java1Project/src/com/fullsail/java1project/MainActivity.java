@@ -85,7 +85,6 @@ public class MainActivity extends Activity {
 		
 		// Test Network Connetion
 		connected = Connectivity.getConnectionStatus(context);
-		connected = Connectivity.getConnectionStatus(context);
 		if (!connected) {
 			// Alert the user that there is no internet connection			
 			new AlertDialog.Builder(context)
@@ -156,6 +155,19 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				connected = Connectivity.getConnectionStatus(context);
+				if (!connected) {
+					// Alert the user that there is no internet connection			
+					new AlertDialog.Builder(context)
+					.setTitle("Warning")
+					.setMessage("Cound not connect to the internet")
+					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {}
+					})
+					.show();
+					return;
+				}
+				
 				Handler dataServieHandler = new Handler() {
 
 					@Override
@@ -175,14 +187,6 @@ public class MainActivity extends Activity {
 							
 							displayWeatherProvider();
 //							parseWeatherJsonObject(); // the parsing will be handled by the content provider.
-						} else if (msg.arg1 == RESULT_CANCELED) {
-							new AlertDialog.Builder(context)
-							.setTitle("Warning")
-							.setMessage("Cound not connect to the internet")
-							.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int which) {}
-							})
-							.show();
 						}
 					}
 				};
