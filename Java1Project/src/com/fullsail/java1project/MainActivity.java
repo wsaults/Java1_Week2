@@ -107,6 +107,7 @@ public class MainActivity extends Activity {
 		
 		// Add the Get button
 		Button button = (Button)findViewById(R.id.searchButton);
+		Button switchViewsButton = (Button)findViewById(R.id.switchViewsButton);
 		
 		_cityName = (EditText)findViewById(R.id.cityNameEditText);
 		
@@ -199,6 +200,17 @@ public class MainActivity extends Activity {
 				startService(startDataServiceIntent);
 				
 				Log.i("Waiting on servie to end: ", "Waiting...");
+			}
+		});
+		
+		// Switch views button
+		switchViewsButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent a = new Intent(getApplicationContext(),SecondActivity.class);
+	        	 a.putExtra("KEY", "VALUE");
+	             a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+	             startActivity(a);
 			}
 		});
 	}

@@ -27,6 +27,8 @@ public class SecondActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// Always call the superclass first
 		super.onCreate(savedInstanceState);
+		
+		setContentView(R.layout.secondlayout);
 	}
 	
 	/* (non-Javadoc)
