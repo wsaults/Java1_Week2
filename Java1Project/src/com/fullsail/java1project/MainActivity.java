@@ -44,6 +44,7 @@ import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.DataService;
 import com.fullsail.lib.FileManager;
 import com.fullsail.lib.ForecastProvider;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import com.parse.Parse;
 
@@ -398,4 +399,18 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 //		FileManager.deleteObjectFile(context, "forecast", false);
 	}
+	
+	@Override
+	  public void onStart() {
+	    super.onStart();
+	    // Google analytics
+	    EasyTracker.getInstance().activityStart(this);
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	 // Google analytics
+	    EasyTracker.getInstance().activityStop(this);
+	  }
 }
