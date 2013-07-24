@@ -5,7 +5,7 @@
  * 
  * @author 	William Saults
  * 
- * date 	Jul 15, 2013
+ * date 	Jul 23, 2013
  */
 package com.fullsail.java1project;
 
@@ -215,6 +215,9 @@ public class MainActivity extends Activity {
 		});
 	}
 	
+	/**
+	 * Display weather provider.
+	 */
 	@SuppressLint("SimpleDateFormat")
 	private void displayWeatherProvider() {
 		if (tableLayout != null) {
@@ -267,6 +270,9 @@ public class MainActivity extends Activity {
 		
 	}
 	
+	/**
+	 * Parses the weather json object.
+	 */
 	@SuppressWarnings("unused")
 	private void parseWeatherJsonObject() {
 		TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
@@ -405,6 +411,9 @@ public class MainActivity extends Activity {
 //	    parseWeatherJsonObject();
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onDestroy()
+	 */
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -412,17 +421,34 @@ public class MainActivity extends Activity {
 //		FileManager.deleteObjectFile(context, "forecast", false);
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onStart()
+	 */
 	@Override
-	  public void onStart() {
-	    super.onStart();
-	    // Google analytics
-	    EasyTracker.getInstance().activityStart(this);
-	  }
+	public void onStart() {
+		super.onStart();
+		// Google analytics
+		EasyTracker.getInstance().activityStart(this);
+	}
 
-	  @Override
-	  public void onStop() {
-	    super.onStop();
-	 // Google analytics
-	    EasyTracker.getInstance().activityStop(this);
-	  }
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onStop()
+	 */
+	@Override
+	public void onStop() {
+		super.onStop();
+		// Google analytics
+		EasyTracker.getInstance().activityStop(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
+		// Refresh the data
+	}
+
+
 }
