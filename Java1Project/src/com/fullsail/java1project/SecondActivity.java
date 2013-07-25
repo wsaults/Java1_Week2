@@ -5,7 +5,7 @@
  * 
  * @author 	William Saults
  * 
- * date 	Jul 23, 2013
+ * date 	Jul 24, 2013
  */
 package com.fullsail.java1project;
 
@@ -29,6 +29,12 @@ import android.widget.EditText;
  */
 public class SecondActivity extends Activity {
 
+	SharedPreferences _preferences;
+	SharedPreferences.Editor _editor;
+	EditText cityName;
+	Button fahrenheitButton;
+	Button celciusButton;
+
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
@@ -36,12 +42,53 @@ public class SecondActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// Always call the superclass first
 		super.onCreate(savedInstanceState);
+		_preferences = getApplicationContext().getSharedPreferences("MyPreferences", MODE_PRIVATE);
+		_editor = _preferences.edit();
 
 		setContentView(R.layout.secondlayout);
-		
-		EditText cityName = (EditText)findViewById(R.id.defaultCityEditText);
-		
-		// cityName.getText().toString()
+
+		// Grab the default city or static default if it does not exist.
+		cityName = (EditText)findViewById(R.id.defaultCityEditText);
+		String cityNameString = _preferences.getString("defaultCity", "dallas");
+		cityName.setText(cityNameString);
+
+		// Save the default city based on the value entered into the city editText.
+		Button saveCityButton = (Button)findViewById(R.id.saveDefaultCity);
+		saveCityButton.setOnClickListener(new View.OnClickListener() { 
+			@Override
+			public void onClick(View v) {
+				// Save preference
+				_editor.putString("defaultCity", cityName.getText().toString());
+				_editor.commit();
+			}
+		});
+
+		// Set to fahrenheit
+		fahrenheitButton = (Button)findViewById(R.id.fahrenheitButton);
+		fahrenheitButton.setOnClickListener(new View.OnClickListener() { 
+			@Override
+			public void onClick(View v) {
+				// Save preference
+				_editor.putBoolean("isCelcius", false);
+				_editor.commit();
+				updateTempButtonStates();
+			}
+		});
+
+		// Set to celcius
+		celciusButton = (Button)findViewById(R.id.celciusButton);
+		celciusButton.setOnClickListener(new View.OnClickListener() { 
+			@Override
+			public void onClick(View v) {				
+				// Save preference
+				_editor.putBoolean("isCelcius", true);
+				_editor.commit();
+				updateTempButtonStates();
+			}
+		});
+
+		// Set which temp button is selected.
+		updateTempButtonStates();
 
 		// Launch web page
 		Button webButton = (Button)findViewById(R.id.webpageButton);
@@ -64,36 +111,21 @@ public class SecondActivity extends Activity {
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.weather.com")));
 			}
 		});
-
-		// Set to fahrenheit
-		Button fahrenheitButton = (Button)findViewById(R.id.fahrenheitButton);
-		fahrenheitButton.setOnClickListener(new View.OnClickListener() { 
-			@Override
-			public void onClick(View v) {
-				// Save preference
-				SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPreferences", MODE_PRIVATE);  
-				SharedPreferences.Editor editor = preferences.edit();
-				editor.putBoolean("isCelcius", false);
-				editor.commit();
-			}
-		});
-
-		// Set to celcius
-		Button celciusButton = (Button)findViewById(R.id.celciusButton);
-		celciusButton.setOnClickListener(new View.OnClickListener() { 
-			@Override
-			public void onClick(View v) {				
-				// Save preference
-				SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPreferences", MODE_PRIVATE);  
-				SharedPreferences.Editor editor = preferences.edit();
-				editor.putBoolean("isCelcius", true);
-				editor.commit();
-
-
-				//--READ data       
-//				myvar = preferences.getInt("var1", 0);
-			}
-		});
+	}
+	
+	/**
+	 * Update temp button states.
+	 */
+	public void updateTempButtonStates() {
+		// Set which temp button is selected.
+		Boolean isCelcius = _preferences.getBoolean("isCelcius", false);
+		if (isCelcius) {
+			fahrenheitButton.setSelected(false);
+			celciusButton.setSelected(true);
+		} else {
+			fahrenheitButton.setSelected(true);
+			celciusButton.setSelected(false);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -115,6 +147,9 @@ public class SecondActivity extends Activity {
 		// Always call the superclass so it can restore the view hierarchy
 		super.onRestoreInstanceState(savedInstanceState);
 
+		// Restore the text in the edit text.
+		String cityNameString = _preferences.getString("defaultCity", "dallas");
+		cityName.setText(cityNameString);
 	}
 
 	/* (non-Javadoc)
