@@ -15,8 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -48,8 +46,6 @@ import com.fullsail.lib.FileManager;
 import com.fullsail.lib.ForecastProvider;
 import com.google.analytics.tracking.android.EasyTracker;
 
-import com.parse.Parse;
-
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,6 +64,7 @@ public class MainActivity extends Activity {
 	SharedPreferences _preferences;
 	SharedPreferences.Editor _editor;
 	Boolean needsWeather;
+	Boolean _isCelcius;
 
 	// Weather
 	EditText _cityName;
@@ -130,9 +127,10 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent a = new Intent(getApplicationContext(),SecondActivity.class);
-				a.putExtra("KEY", "VALUE");
+				a.putExtra("history", getHistory().toString());
 				a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-				startActivity(a);
+				setResult(RESULT_OK, a);
+				startActivityForResult(a,0);
 			}
 		});
 	}
@@ -226,7 +224,13 @@ public class MainActivity extends Activity {
 					tableRow.setLayoutParams(tableParams);
 					
 					// Leave as celcius or converte to fahrentheit.
-					Boolean isCelcius = _preferences.getBoolean("isCelcius", false);
+					Boolean isCelcius = false;
+					if (_isCelcius == null) {
+						isCelcius = _preferences.getBoolean("isCelcius", false);
+					} else {
+						isCelcius = _isCelcius;
+					}
+					
 					String dateHighLow;
 					if (isCelcius) {
 						dateHighLow = " Date: " + dateText + " " + "| High: " + maxString + " | Low: " + minString + "\n";
@@ -252,71 +256,6 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	/**
-	 * Parses the weather json object.
-	 */
-	@SuppressWarnings("unused")
-	private void parseWeatherJsonObject() {
-		TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-
-		TableLayout tableLayout = new TableLayout(context);
-		tableLayout.setLayoutParams(layoutParams);
-		tableLayout.setShrinkAllColumns(true);
-
-		LinearLayout tableLL = (LinearLayout) findViewById(R.id.tableLayout);
-		tableLL.addView(tableLayout);
-
-		JSONObject obj;
-		try {
-			_forecastString = getLocalForecast().toString();
-			obj = new JSONObject(_forecastString);
-			if (obj != null) {
-				JSONArray list = obj.getJSONArray("list");
-				for (int i = 0; i < list.length(); i++) {
-					//					View.inflate(context,R.layout.forecast_grid_layout, linearLayout);
-					Log.i("list obj", list.getJSONObject(i).toString());
-
-					JSONObject json = list.getJSONObject(i);
-					JSONObject temp = json.getJSONObject("temp");
-
-					/*
-					// Kelven to Fahrenheit conversion (¼K - 273.15)* 1.8000 + 32.00
-					Double max = Double.parseDouble(temp.getString("max"));
-					max = (max - 273.15) * 1.8000 + 32.00;
-					BigDecimal maxBd = new BigDecimal(max).setScale(2, RoundingMode.HALF_UP);
-
-					Double min = Double.parseDouble(temp.getString("min"));
-					min = (min - 273.15) * 1.8000 + 32.00;
-					BigDecimal minBd = new BigDecimal(min).setScale(2, RoundingMode.HALF_UP);
-					 */
-
-					JSONArray weather = json.getJSONArray("weather");
-					JSONObject weatherObj = weather.getJSONObject(0);
-
-					TableRow tableRow = new TableRow(context);
-					tableRow.setLayoutParams(tableParams);
-					String dateHighLow = " Date: " + json.getString("dt") + " High: " + temp.getString("max") + "\n Low: " + temp.getString("min") + "\n";
-					TextView text1 = new TextView(context);
-					text1.setText(dateHighLow);
-					tableRow.addView(text1);
-					tableLayout.addView(tableRow);
-
-					TableRow tableRow2 = new TableRow(context);
-					tableRow2.setLayoutParams(tableParams);
-					String desc = " | Weather: " + weatherObj.getString("description");
-					TextView text2 = new TextView(context);
-					text2.setText(desc);
-					tableRow.addView(text2);
-
-					tableLayout.addView(tableRow2);
-				}
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
 	 */
@@ -338,7 +277,7 @@ public class MainActivity extends Activity {
 	 *
 	 * @return the history
 	 */
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings({"unchecked"})
 	private HashMap<String, String> getHistory() {
 		Object stored = FileManager.readObjectFile(context, "history", false);
 		HashMap<String, String> history;
@@ -356,7 +295,7 @@ public class MainActivity extends Activity {
 	 *
 	 * @return the local forecast
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private HashMap<String, String> getLocalForecast() {
 		Object stored = FileManager.readObjectFile(context, "forecast", false);
 		HashMap<String, String> forecast;
@@ -454,6 +393,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		
 		// Refresh the data
 		if (needsWeather) {
 			String cityNameString = _preferences.getString("defaultCity", "dallas");
@@ -462,4 +402,16 @@ public class MainActivity extends Activity {
 		}
 		needsWeather = true;
 	}
+	
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      if (resultCode == RESULT_OK && requestCode == 0) {
+        Bundle result = data.getExtras();
+        if (result != null){
+  		  _isCelcius = result.getBoolean("isCelcius");
+  		}
+      }
+    }
+
+
 }

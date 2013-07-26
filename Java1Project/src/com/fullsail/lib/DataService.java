@@ -179,23 +179,6 @@ public class DataService extends IntentService {
 				_context = getBaseContext();
 				FileManager.storeStringFile(_context,FORECAST_TEXT_FILENAME, result, false);
 				
-				/*
-				 * Commented out the following because I switched to a JSON text file.
-				 * 
-				//get JSONObject from result
-				JSONObject json = new JSONObject(result);
-				JSONArray list = json.getJSONArray("list");
-
-//				for (int i = 0; i < list.length(); i++) {
-//					Log.i("list obj", list.getJSONObject(i).toString());
-//				}
-				
-				// Save array of JSON objects locally
-				jsonHashMap = new HashMap <String, String>();
-				jsonHashMap.put("list", list.toString()); 
-				FileManager.storeObjectFile(context, FORECAST_OBJECT_FILENAME, jsonHashMap, false);
-				*/
-				
 				message.arg1 = Activity.RESULT_OK;
 				message.obj = "Service is Done";
 				

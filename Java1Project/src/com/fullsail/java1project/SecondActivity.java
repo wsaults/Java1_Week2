@@ -11,6 +11,7 @@ package com.fullsail.java1project;
 
 import com.fullsail.lib.Connectivity;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Log;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -46,6 +47,14 @@ public class SecondActivity extends Activity {
 		_editor = _preferences.edit();
 
 		setContentView(R.layout.secondlayout);
+
+		// Get the history. 
+		// In the future add a clear history button.
+		Bundle data = getIntent().getExtras();
+		if (data != null){
+			String history = data.getString("history");
+			Log.i("The history arrived: " + history);
+		}
 
 		// Grab the default city or static default if it does not exist.
 		cityName = (EditText)findViewById(R.id.defaultCityEditText);
@@ -112,7 +121,7 @@ public class SecondActivity extends Activity {
 			}
 		});
 	}
-	
+
 	/**
 	 * Update temp button states.
 	 */
@@ -179,5 +188,15 @@ public class SecondActivity extends Activity {
 		super.onStop();
 		// Google analytics
 		EasyTracker.getInstance().activityStop(this);
+	}
+
+	@Override
+	public void onBackPressed() {
+		// Send the choosen temp format back.
+		Intent a = new Intent(getApplicationContext(),MainActivity.class);
+		Boolean isCelcius = _preferences.getBoolean("isCelcius", false);
+		a.putExtra("isCelcius", isCelcius);
+		setResult(RESULT_OK, a);
+		super.finish();
 	}
 }
