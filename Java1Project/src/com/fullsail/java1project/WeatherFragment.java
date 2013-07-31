@@ -2,7 +2,6 @@ package com.fullsail.java1project;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,11 @@ public class WeatherFragment extends Fragment {
 
 		return view;
 	};
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 	
 	@Override
 	public void onAttach(Activity activity) {
