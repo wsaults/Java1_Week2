@@ -40,6 +40,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.fullsail.java1project.WeatherFragment.WeatherListener;
 import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.DataService;
 import com.fullsail.lib.FileManager;
@@ -52,7 +53,7 @@ import com.google.analytics.tracking.android.EasyTracker;
  * The Class MainActivity.
  */
 @SuppressLint("HandlerLeak")
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements WeatherFragment.WeatherListener {
 
 	// Variables
 	LinearLayout linearLayout;
@@ -88,7 +89,7 @@ public class MainActivity extends Activity {
 		_editor = _preferences.edit();
 		needsWeather = true;
 
-		setContentView(R.layout.mainlayout);
+		setContentView(R.layout.weatherfrag);
 
 		//		Parse.initialize(this, "6WphHpeWQJxN6LcsjSME5SuDJNByUgWcp4HutqIG", "QiICRS6hDy2RqJavJXbZm0n5yFlNYhDOBW8MPKRi"); 
 
@@ -120,19 +121,6 @@ public class MainActivity extends Activity {
 		_cityName = (EditText)findViewById(R.id.cityNameEditText);
 		String cityNameString = _preferences.getString("defaultCity", "dallas");
 		_cityName.setText(cityNameString);
-
-		// Switch views button
-		Button switchViewsButton = (Button)findViewById(R.id.switchViewsButton);
-		switchViewsButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent a = new Intent(getApplicationContext(),SecondActivity.class);
-				a.putExtra("history", getHistory().toString());
-				a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-				setResult(RESULT_OK, a);
-				startActivityForResult(a,0);
-			}
-		});
 	}
 
 	/**
@@ -412,6 +400,20 @@ public class MainActivity extends Activity {
   		}
       }
     }
+
+    /*
+     * (non-Javadoc)
+     * @see com.fullsail.java1project.WeatherFragment.WeatherListener#switchToPreferencesActivity()
+     */
+	@Override
+	public void switchToPreferencesActivity() {
+		// TODO Auto-generated method stub
+		Intent a = new Intent(getApplicationContext(),SecondActivity.class);
+		a.putExtra("history", getHistory().toString());
+		a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		setResult(RESULT_OK, a);
+		startActivityForResult(a,0);
+	}
 
 
 }
