@@ -15,26 +15,24 @@ import com.google.analytics.tracking.android.Log;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SecondActivity.
  */
-public class SecondActivity extends Activity {
+public class SecondActivity extends Activity implements PreferencesFragment.PreferencesListener {
 
 	SharedPreferences _preferences;
-	SharedPreferences.Editor _editor;
-	EditText cityName;
-	Button fahrenheitButton;
-	Button celciusButton;
+	static SharedPreferences.Editor _editor;
+	static EditText cityName;
+	static Context context;
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -46,7 +44,7 @@ public class SecondActivity extends Activity {
 		_preferences = getApplicationContext().getSharedPreferences("MyPreferences", MODE_PRIVATE);
 		_editor = _preferences.edit();
 
-		setContentView(R.layout.secondlayout);
+		setContentView(R.layout.preferencesfrag);
 
 		// Get the history. 
 		// In the future add a clear history button.
@@ -60,81 +58,6 @@ public class SecondActivity extends Activity {
 		cityName = (EditText)findViewById(R.id.defaultCityEditText);
 		String cityNameString = _preferences.getString("defaultCity", "dallas");
 		cityName.setText(cityNameString);
-
-		// Save the default city based on the value entered into the city editText.
-		Button saveCityButton = (Button)findViewById(R.id.saveDefaultCity);
-		saveCityButton.setOnClickListener(new View.OnClickListener() { 
-			@Override
-			public void onClick(View v) {
-				// Save preference
-				_editor.putString("defaultCity", cityName.getText().toString());
-				_editor.commit();
-			}
-		});
-
-		// Set to fahrenheit
-		fahrenheitButton = (Button)findViewById(R.id.fahrenheitButton);
-		fahrenheitButton.setOnClickListener(new View.OnClickListener() { 
-			@Override
-			public void onClick(View v) {
-				// Save preference
-				_editor.putBoolean("isCelcius", false);
-				_editor.commit();
-				updateTempButtonStates();
-			}
-		});
-
-		// Set to celcius
-		celciusButton = (Button)findViewById(R.id.celciusButton);
-		celciusButton.setOnClickListener(new View.OnClickListener() { 
-			@Override
-			public void onClick(View v) {				
-				// Save preference
-				_editor.putBoolean("isCelcius", true);
-				_editor.commit();
-				updateTempButtonStates();
-			}
-		});
-
-		// Set which temp button is selected.
-		updateTempButtonStates();
-
-		// Launch web page
-		Button webButton = (Button)findViewById(R.id.webpageButton);
-		webButton.setOnClickListener(new View.OnClickListener() { 
-			@Override
-			public void onClick(View v) {
-				Boolean connected = Connectivity.getConnectionStatus(getApplicationContext());
-				if (!connected) {
-					// Alert the user that there is no internet connection			
-					new AlertDialog.Builder(getApplicationContext())
-					.setTitle("Warning")
-					.setMessage("Cound not connect to the internet")
-					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {}
-					})
-					.show();
-					return;
-				}
-
-				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.weather.com")));
-			}
-		});
-	}
-
-	/**
-	 * Update temp button states.
-	 */
-	public void updateTempButtonStates() {
-		// Set which temp button is selected.
-		Boolean isCelcius = _preferences.getBoolean("isCelcius", false);
-		if (isCelcius) {
-			fahrenheitButton.setSelected(false);
-			celciusButton.setSelected(true);
-		} else {
-			fahrenheitButton.setSelected(true);
-			celciusButton.setSelected(false);
-		}
 	}
 
 	/* (non-Javadoc)
@@ -198,5 +121,61 @@ public class SecondActivity extends Activity {
 		a.putExtra("isCelcius", isCelcius);
 		setResult(RESULT_OK, a);
 		super.finish();
+	}
+
+	public static void saveCityHandler() {
+		// Save preference
+		_editor.putString("defaultCity", cityName.getText().toString());
+		_editor.commit();
+	}
+
+	public static void openWebPageHandler(Context context) {
+		Boolean connected = Connectivity.getConnectionStatus(context);
+		if (!connected) {
+			// Alert the user that there is no internet connection			
+			new AlertDialog.Builder(context)
+			.setTitle("Warning")
+			.setMessage("Cound not connect to the internet")
+			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {}
+			})
+			.show();
+			return;
+		}
+
+		context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.weather.com")));
+	}
+
+	public static void setFahrenheitHandler() {
+		// Save preference
+		_editor.putBoolean("isCelcius", false);
+		_editor.commit();
+	}
+
+	public static void setCelciusHandler() {
+		// Save preference
+		_editor.putBoolean("isCelcius", true);
+		_editor.commit();
+	}
+
+	// PreferenceFragment methods
+	@Override
+	public void saveCity() {
+		saveCityHandler();
+	}
+
+	@Override
+	public void openWebPage() {
+		openWebPageHandler(getApplicationContext());
+	}
+
+	@Override
+	public void setFahrenheit() {
+		setFahrenheitHandler();
+	}
+
+	@Override
+	public void setCelcius() {
+		setCelciusHandler();
 	}
 }

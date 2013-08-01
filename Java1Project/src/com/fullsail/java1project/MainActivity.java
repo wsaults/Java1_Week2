@@ -38,6 +38,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.fullsail.java1project.SecondActivity;
 import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.DataService;
 import com.fullsail.lib.FileManager;
@@ -50,7 +51,7 @@ import com.google.analytics.tracking.android.EasyTracker;
  * The Class MainActivity.
  */
 @SuppressLint("HandlerLeak")
-public class MainActivity extends Activity implements WeatherFragment.WeatherListener {
+public class MainActivity extends Activity implements WeatherFragment.WeatherListener, PreferencesFragment.PreferencesListener {
 
 	// Variables
 	LinearLayout linearLayout;
@@ -398,6 +399,8 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
       }
     }
 
+    
+    // Weather Fragment method
     /*
      * (non-Javadoc)
      * @see com.fullsail.java1project.WeatherFragment.WeatherListener#switchToPreferencesActivity()
@@ -410,6 +413,28 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 		a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		setResult(RESULT_OK, a);
 		startActivityForResult(a,0);
+	}
+	
+	
+	// Preference Fragment methods
+	@Override
+	public void saveCity() {
+		SecondActivity.saveCityHandler();
+	}
+
+	@Override
+	public void openWebPage() {
+		SecondActivity.openWebPageHandler(getApplicationContext());
+	}
+
+	@Override
+	public void setFahrenheit() {
+		SecondActivity.setFahrenheitHandler();
+	}
+
+	@Override
+	public void setCelcius() {
+		SecondActivity.setCelciusHandler();
 	}
 
 
