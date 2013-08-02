@@ -43,6 +43,7 @@ public class SecondActivity extends Activity implements PreferencesFragment.Pref
 		super.onCreate(savedInstanceState);
 		_preferences = getApplicationContext().getSharedPreferences("MyPreferences", MODE_PRIVATE);
 		_editor = _preferences.edit();
+		_editor.commit();
 
 		setContentView(R.layout.preferencesfrag);
 
@@ -123,10 +124,14 @@ public class SecondActivity extends Activity implements PreferencesFragment.Pref
 		super.finish();
 	}
 
-	public static void saveCityHandler() {
+	public static void saveCityHandler(Context context) {
 		// Save preference
-		_editor.putString("defaultCity", cityName.getText().toString());
-		_editor.commit();
+		SharedPreferences preferences;
+		SharedPreferences.Editor editor;
+		preferences = context.getSharedPreferences("MyPreferences", MODE_PRIVATE);
+		editor = preferences.edit();
+		editor.putString("defaultCity", cityName.getText().toString());
+		editor.commit();
 	}
 
 	public static void openWebPageHandler(Context context) {
@@ -146,22 +151,30 @@ public class SecondActivity extends Activity implements PreferencesFragment.Pref
 		context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.weather.com")));
 	}
 
-	public static void setFahrenheitHandler() {
+	public static void setFahrenheitHandler(Context context) {
 		// Save preference
-		_editor.putBoolean("isCelcius", false);
-		_editor.commit();
+		SharedPreferences preferences;
+		SharedPreferences.Editor editor;
+		preferences = context.getSharedPreferences("MyPreferences", MODE_PRIVATE);
+		editor = preferences.edit();
+		editor.putBoolean("isCelcius", false);
+		editor.commit();
 	}
 
-	public static void setCelciusHandler() {
+	public static void setCelciusHandler(Context context) {
 		// Save preference
-		_editor.putBoolean("isCelcius", true);
-		_editor.commit();
+		SharedPreferences preferences;
+		SharedPreferences.Editor editor;
+		preferences = context.getSharedPreferences("MyPreferences", MODE_PRIVATE);
+		editor = preferences.edit();
+		editor.putBoolean("isCelcius", true);
+		editor.commit();
 	}
 
 	// PreferenceFragment methods
 	@Override
 	public void saveCity() {
-		saveCityHandler();
+		saveCityHandler(getApplicationContext());
 	}
 
 	@Override
@@ -171,11 +184,11 @@ public class SecondActivity extends Activity implements PreferencesFragment.Pref
 
 	@Override
 	public void setFahrenheit() {
-		setFahrenheitHandler();
+		setFahrenheitHandler(getApplicationContext());
 	}
 
 	@Override
 	public void setCelcius() {
-		setCelciusHandler();
+		setCelciusHandler(getApplicationContext());
 	}
 }

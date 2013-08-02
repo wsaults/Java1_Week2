@@ -9,7 +9,6 @@
  */
 package com.fullsail.java1project;
 
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +16,7 @@ import java.util.HashMap;
 
 import org.json.JSONObject;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -93,20 +93,9 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 
 		// Test Network Connetion
 		connected = Connectivity.getConnectionStatus(context);
-		if (!connected) {
-			// Alert the user that there is no internet connection			
-			new AlertDialog.Builder(context)
-			.setTitle("Warning")
-			.setMessage("Cound not connect to the internet")
-			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {}
-			})
-			.show();
-		} else {
-			// Go get the weather!
-			fetchWeather();
-			needsWeather = false;
-		}
+		// Go get the weather!
+		fetchWeather();
+		needsWeather = false;
 
 		// Setup a linear layout
 		linearLayout = new LinearLayout(this);
@@ -121,19 +110,23 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 		_cityName.setText(cityNameString);
 	}
 
+	public void noConnectionAlert() {
+		// Alert the user that there is no internet connection			
+		new AlertDialog.Builder(context)
+		.setTitle("Warning")
+		.setMessage("Cound not connect to the internet")
+		.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {}
+		})
+		.show();
+	}
+
 	/**
 	 * Fetch weather based on the saved city preference.
 	 */
 	public void fetchWeather() {
 		if (!connected) {
-			// Alert the user that there is no internet connection			
-			new AlertDialog.Builder(context)
-			.setTitle("Warning")
-			.setMessage("Cound not connect to the internet")
-			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {}
-			})
-			.show();
+			noConnectionAlert();
 		} else {
 			// Go get the weather!
 			Handler dataServieHandler = new Handler() {
@@ -205,10 +198,10 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 					Date date = new Date(Long.parseLong(dateString) * 1000);
 					SimpleDateFormat df = new SimpleDateFormat("MM-dd");
 					String dateText = df.format(date);
-					
+
 					TableRow tableRow = new TableRow(context);
 					tableRow.setLayoutParams(tableParams);
-					
+
 					// Leave as celcius or converte to fahrentheit.
 					Boolean isCelcius = false;
 					if (_isCelcius == null) {
@@ -216,7 +209,7 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 					} else {
 						isCelcius = _isCelcius;
 					}
-					
+
 					String dateHighLow;
 					if (isCelcius) {
 						dateHighLow = " Date: " + dateText + " " + "| High: " + maxString + " | Low: " + minString + "\n";
@@ -224,7 +217,7 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 						double maxD = Double.parseDouble(maxString);
 						DecimalFormat decimalFormatter = new DecimalFormat("0.00");
 						maxString = decimalFormatter.format((maxD * 1.8) + 32);
-					
+
 						double minD = Double.parseDouble(minString);
 						minString = decimalFormatter.format((minD * 1.8) + 32);
 						dateHighLow = " Date: " + dateText + " " + "| High: " + maxString + " | Low: " + minString + "\n";
@@ -232,6 +225,7 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 
 					TextView text1 = new TextView(context);
 					text1.setText(dateHighLow);
+					text1.setHeight(50);
 					tableRow.addView(text1);
 					tableLayout.addView(tableRow);
 				} while (cursor.moveToNext());
@@ -379,7 +373,7 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 	@Override
 	public void onResume() {
 		super.onResume();
-		
+
 		// Refresh the data
 		if (needsWeather) {
 			String cityNameString = _preferences.getString("defaultCity", "dallas");
@@ -388,23 +382,23 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 		}
 		needsWeather = true;
 	}
-	
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-      if (resultCode == RESULT_OK && requestCode == 0) {
-        Bundle result = data.getExtras();
-        if (result != null){
-  		  _isCelcius = result.getBoolean("isCelcius");
-  		}
-      }
-    }
 
-    
-    // Weather Fragment method
-    /*
-     * (non-Javadoc)
-     * @see com.fullsail.java1project.WeatherFragment.WeatherListener#switchToPreferencesActivity()
-     */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK && requestCode == 0) {
+			Bundle result = data.getExtras();
+			if (result != null){
+				_isCelcius = result.getBoolean("isCelcius");
+			}
+		}
+	}
+
+
+	// Weather Fragment method
+	/*
+	 * (non-Javadoc)
+	 * @see com.fullsail.java1project.WeatherFragment.WeatherListener#switchToPreferencesActivity()
+	 */
 	@Override
 	public void switchToPreferencesActivity() {
 		// TODO Auto-generated method stub
@@ -414,27 +408,54 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 		setResult(RESULT_OK, a);
 		startActivityForResult(a,0);
 	}
-	
-	
+
+
 	// Preference Fragment methods
 	@Override
 	public void saveCity() {
-		SecondActivity.saveCityHandler();
+		// Save preference
+		//		SecondActivity.saveCityHandler(context);
+		
+		
+		// Test Network Connetion
+		connected = Connectivity.getConnectionStatus(context);
+		// Go get the weather!
+		fetchWeather();
+		needsWeather = false;
 	}
 
 	@Override
 	public void openWebPage() {
-		SecondActivity.openWebPageHandler(getApplicationContext());
+		Boolean connected = Connectivity.getConnectionStatus(context);
+		if (!connected) {
+			// Alert the user that there is no internet connection			
+			new AlertDialog.Builder(context)
+			.setTitle("Warning")
+			.setMessage("Cound not connect to the internet")
+			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {}
+			})
+			.show();
+			return;
+		}
+
+		context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.weather.com")));
 	}
 
 	@Override
 	public void setFahrenheit() {
-		SecondActivity.setFahrenheitHandler();
+		SecondActivity.setFahrenheitHandler(context);
+		// Go get the weather!
+		fetchWeather();
+		needsWeather = false;
 	}
 
 	@Override
 	public void setCelcius() {
-		SecondActivity.setCelciusHandler();
+		SecondActivity.setCelciusHandler(context);
+		// Go get the weather!
+		fetchWeather();
+		needsWeather = false;
 	}
 
 
