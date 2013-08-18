@@ -13,6 +13,7 @@ import com.fullsail.lib.Connectivity;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Log;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -46,6 +47,9 @@ public class SecondActivity extends Activity implements PreferencesFragment.Pref
 		_editor.commit();
 
 		setContentView(R.layout.preferencesfrag);
+		
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 
 		// Get the history. 
 		// In the future add a clear history button.

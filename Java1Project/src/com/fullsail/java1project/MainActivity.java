@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -91,6 +92,7 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 		needsWeather = true;
 
 		setContentView(R.layout.weatherfrag);
+
 
 		//		Parse.initialize(this, "6WphHpeWQJxN6LcsjSME5SuDJNByUgWcp4HutqIG", "QiICRS6hDy2RqJavJXbZm0n5yFlNYhDOBW8MPKRi"); 
 
