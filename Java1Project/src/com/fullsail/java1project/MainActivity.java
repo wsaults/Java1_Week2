@@ -272,6 +272,11 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 	        case R.id.action_preferences:
 	            switchToPreferencesActivity();
 	            return true;
+	        case R.id.action_refresh:
+	        	// Go get the weather!
+	    		fetchWeather();
+	    		needsWeather = false;
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

@@ -1,6 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" 
     xmlns:Java1Project="http://schemas.android.com/apk/res-auto" >
-
+    
+    <item android:id="@+id/action_refresh"
+          android:title="@string/action_refresh"
+          android:showAsAction="ifRoom|collapseActionView"
+          android:actionViewClass="android.support.v7.widget.SearchView"
+          android:icon="@drawable/ic_action_refresh" />
+    
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

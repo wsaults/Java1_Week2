@@ -32,15 +32,17 @@ public final class R {
         public static final int activity_vertical_margin=0x7f060001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int logo=0x7f020001;
-        public static final int wallpaper=0x7f020002;
+        public static final int ic_action_refresh=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int logo=0x7f020002;
+        public static final int wallpaper=0x7f020003;
     }
     public static final class id {
         public static final int GridLayout1=0x7f0a0000;
-        public static final int action_preferences=0x7f0a0017;
-        public static final int action_search=0x7f0a0016;
-        public static final int action_settings=0x7f0a0015;
+        public static final int action_preferences=0x7f0a0018;
+        public static final int action_refresh=0x7f0a0015;
+        public static final int action_search=0x7f0a0017;
+        public static final int action_settings=0x7f0a0016;
         public static final int brandingImage=0x7f0a0009;
         public static final int celciusButton=0x7f0a0012;
         public static final int chooseCityLabel=0x7f0a000d;
@@ -73,17 +75,18 @@ public final class R {
         public static final int main=0x7f090000;
     }
     public static final class string {
-        public static final int Venue1=0x7f040006;
-        public static final int Venue2=0x7f040007;
-        public static final int Venue3=0x7f040008;
+        public static final int Venue1=0x7f040007;
+        public static final int Venue2=0x7f040008;
+        public static final int Venue3=0x7f040009;
         public static final int action_preferences=0x7f040004;
+        public static final int action_refresh=0x7f040005;
         public static final int action_search=0x7f040003;
         public static final int action_settings=0x7f040002;
         public static final int app_name=0x7f040001;
         /** Replace placeholder ID with your tracking ID
          */
         public static final int ga_trackingId=0x7f040000;
-        public static final int hello_world=0x7f040005;
+        public static final int hello_world=0x7f040006;
     }
     public static final class style {
         /** 
