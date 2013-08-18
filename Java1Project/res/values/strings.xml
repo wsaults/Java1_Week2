@@ -16,5 +16,15 @@
     <string name="Venue3">
         {\"id\":\"4c30d80aa0ced13a4dc1126e\",\"name\":\"Govenors island\",\"location\": {},\"categories\": []}
 	</string>
+	
+    <string-array name="cities_array">
+        <item>Dallas</item>
+        <item>Cupertino</item>
+        <item>New York</item>
+        <item>Miami</item>
+        <item>Las Vegas</item>
+        <item>Garland</item>
+        <item>Richardson</item>
+    </string-array>
 
 </resources>

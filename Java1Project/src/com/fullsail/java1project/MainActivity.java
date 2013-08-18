@@ -32,9 +32,11 @@ import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -67,7 +69,7 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 	Boolean _isCelcius;
 
 	// Weather
-	EditText _cityName;
+	Spinner spinner;
 	JSONObject _weatherJson;
 	String _forecastString;
 	TableLayout tableLayout;
@@ -105,10 +107,15 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 		linearLayout.setLayoutParams(layoutParams);
 
 		this.addContentView(linearLayout, layoutParams);
-
-		_cityName = (EditText)findViewById(R.id.cityNameEditText);
-		String cityNameString = _preferences.getString("defaultCity", "dallas");
-		_cityName.setText(cityNameString);
+		
+		spinner = (Spinner) findViewById(R.id.citySpinner);
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+		        R.array.cities_array, android.R.layout.simple_spinner_item);
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		spinner.setAdapter(adapter);
 	}
 
 	public void noConnectionAlert() {
@@ -315,7 +322,7 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {    
 		// Save the form information.
-		savedInstanceState.putString("cityName", _cityName.getText().toString());
+		savedInstanceState.putString("cityName", spinner.getSelectedItem().toString());
 
 		// Always call the superclass so it can save the view hierarchy state
 		super.onSaveInstanceState(savedInstanceState);
@@ -333,10 +340,6 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		// Always call the superclass so it can restore the view hierarchy
 		super.onRestoreInstanceState(savedInstanceState);
-
-		// Restore state members from saved instance
-		String cityNameString = _preferences.getString("defaultCity", "dallas");
-		_cityName.setText(cityNameString);
 
 		displayWeatherProvider();
 	}
@@ -392,8 +395,6 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 
 		// Refresh the data
 		if (needsWeather) {
-			String cityNameString = _preferences.getString("defaultCity", "dallas");
-			_cityName.setText(cityNameString);
 			fetchWeather();
 		}
 		needsWeather = true;
