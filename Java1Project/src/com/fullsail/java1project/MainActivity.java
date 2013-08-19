@@ -61,7 +61,6 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 	Context context = this;
 	public static Boolean connected = false;
 	HashMap<String, String> _history;
-	GridLayout forecastGridLayout;
 	SharedPreferences _preferences;
 	SharedPreferences.Editor _editor;
 	Boolean needsWeather;
