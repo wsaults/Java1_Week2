@@ -40,9 +40,9 @@ public final class R {
     public static final class id {
         public static final int GridLayout1=0x7f0a0000;
         public static final int action_preferences=0x7f0a0018;
-        public static final int action_refresh=0x7f0a0015;
+        public static final int action_refresh=0x7f0a0016;
         public static final int action_search=0x7f0a0017;
-        public static final int action_settings=0x7f0a0016;
+        public static final int action_settings=0x7f0a0015;
         public static final int brandingImage=0x7f0a0009;
         public static final int celciusButton=0x7f0a0012;
         public static final int chooseCityLabel=0x7f0a000d;
@@ -65,14 +65,16 @@ public final class R {
         public static final int webpageButton=0x7f0a0013;
     }
     public static final class layout {
-        public static final int forecast_grid_layout=0x7f030000;
-        public static final int mainlayout=0x7f030001;
-        public static final int preferencesfrag=0x7f030002;
-        public static final int secondlayout=0x7f030003;
-        public static final int weatherfrag=0x7f030004;
+        public static final int activity_config_weather_widget=0x7f030000;
+        public static final int forecast_grid_layout=0x7f030001;
+        public static final int mainlayout=0x7f030002;
+        public static final int preferencesfrag=0x7f030003;
+        public static final int secondlayout=0x7f030004;
+        public static final int weatherfrag=0x7f030005;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
+        public static final int config_weather_widget=0x7f090000;
+        public static final int main=0x7f090001;
     }
     public static final class string {
         public static final int Venue1=0x7f040007;
@@ -87,6 +89,7 @@ public final class R {
          */
         public static final int ga_trackingId=0x7f040000;
         public static final int hello_world=0x7f040006;
+        public static final int title_activity_config_weather_widget=0x7f04000a;
     }
     public static final class style {
         /** 

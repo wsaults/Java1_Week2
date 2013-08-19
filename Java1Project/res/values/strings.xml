@@ -7,17 +7,10 @@
     <string name="action_preferences">Preferences</string>
     <string name="action_refresh">Refresh</string>
     <string name="hello_world">Hello world!</string>
+    <string name="Venue1">    	{\"id\":\"42377700f964a52024201fe3\",\"name\":\"Brooklyn Heights Promenade\"}</string>
+    <string name="Venue2">        {\"id\":\"4ebac60a0cd6904066e4108f\", \"name\":\"Brookyn Bridge Park Greenway\",\"location\":{},\"categories\":[]}</string>
+    <string name="Venue3">        {\"id\":\"4c30d80aa0ced13a4dc1126e\",\"name\":\"Govenors island\",\"location\": {},\"categories\": []}</string>
 
-    <string name="Venue1">
-    	{\"id\":\"42377700f964a52024201fe3\",\"name\":\"Brooklyn Heights Promenade\"}
-    </string>
-    <string name="Venue2">
-        {\"id\":\"4ebac60a0cd6904066e4108f\", \"name\":\"Brookyn Bridge Park Greenway\",\"location\":{},\"categories\":[]}
-    </string>
-    <string name="Venue3">
-        {\"id\":\"4c30d80aa0ced13a4dc1126e\",\"name\":\"Govenors island\",\"location\": {},\"categories\": []}
-	</string>
-	
     <string-array name="cities_array">
         <item>Dallas</item>
         <item>Cupertino</item>
@@ -27,5 +20,7 @@
         <item>Garland</item>
         <item>Richardson</item>
     </string-array>
+
+    <string name="title_activity_config_weather_widget">ConfigWeatherWidgetActivity</string>
 
 </resources>
