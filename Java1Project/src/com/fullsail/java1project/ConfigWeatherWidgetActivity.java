@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RemoteViews;
 import android.widget.Spinner;
 
 public class ConfigWeatherWidgetActivity extends Activity implements OnClickListener {
@@ -56,7 +58,19 @@ public class ConfigWeatherWidgetActivity extends Activity implements OnClickList
 				editor.putString("defaultCity", spinner.getSelectedItem().toString());
 				editor.commit();
 			}
-
+			
+			RemoteViews rv = new RemoteViews(this.getPackageName(), R.layout.activity_config_weather_widget);
+			
+			// save spinner choice			
+			SharedPreferences preferences = this.getSharedPreferences("MyPreferences", MODE_PRIVATE);
+			preferences.edit().putString("defaultCity", spinner.getSelectedItem().toString());
+			
+			AppWidgetManager.getInstance(this).updateAppWidget(widgetId, rv);
+			
+			Intent resultValue = new Intent();
+			resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+			setResult(RESULT_OK, resultValue);
+			finish();
 		}
 	}
 
