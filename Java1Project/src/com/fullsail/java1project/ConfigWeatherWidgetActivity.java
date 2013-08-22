@@ -3,25 +3,26 @@ package com.fullsail.java1project;
 import android.os.Bundle;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
-import android.view.Menu;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.Spinner;
 
-public class ConfigWeatherWidgetActivity extends Activity implements OnClickListener {
+public class ConfigWeatherWidgetActivity extends Activity {
 
 	Spinner spinner;
+	private ConfigWeatherWidgetActivity _context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_config_weather_widget);
+		setResult(RESULT_CANCELED);
+		
+		_context = this;
 
 		spinner = (Spinner) findViewById(R.id.citySpinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
@@ -33,45 +34,37 @@ public class ConfigWeatherWidgetActivity extends Activity implements OnClickList
 		spinner.setAdapter(adapter);
 
 		Button button = (Button) this.findViewById(R.id.submitButton);
-		button.setOnClickListener((android.view.View.OnClickListener) this);
+		button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+            	Bundle extras = getIntent().getExtras();
+        		if (extras != null) {
+        			int widgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+
+        			if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+        				SharedPreferences preferences;
+        				SharedPreferences.Editor editor;
+        				preferences = _context.getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        				editor = preferences.edit();
+        				editor.putString("defaultCity", spinner.getSelectedItem().toString());
+        				editor.commit();
+        			}
+        			
+        			RemoteViews rv = new RemoteViews(_context.getPackageName(), R.layout.activity_config_weather_widget);
+        			
+        			// save spinner choice			
+        			SharedPreferences preferences = _context.getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        			preferences.edit().putString("defaultCity", spinner.getSelectedItem().toString());
+        			
+        			AppWidgetManager.getInstance(_context).updateAppWidget(widgetId, rv);
+        			
+        			Intent resultValue = new Intent();
+        			resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        			setResult(RESULT_OK, resultValue);
+        			finish();
+        		}
+            }
+        });
+
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.config_weather_widget, menu);
-		return true;
-	}
-
-	@Override
-	public void onClick(DialogInterface arg0, int arg1) {
-		// TODO Auto-generated method stub
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			int widgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-
-			if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-				SharedPreferences preferences;
-				SharedPreferences.Editor editor;
-				preferences = this.getSharedPreferences("MyPreferences", MODE_PRIVATE);
-				editor = preferences.edit();
-				editor.putString("defaultCity", spinner.getSelectedItem().toString());
-				editor.commit();
-			}
-			
-			RemoteViews rv = new RemoteViews(this.getPackageName(), R.layout.activity_config_weather_widget);
-			
-			// save spinner choice			
-			SharedPreferences preferences = this.getSharedPreferences("MyPreferences", MODE_PRIVATE);
-			preferences.edit().putString("defaultCity", spinner.getSelectedItem().toString());
-			
-			AppWidgetManager.getInstance(this).updateAppWidget(widgetId, rv);
-			
-			Intent resultValue = new Intent();
-			resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-			setResult(RESULT_OK, resultValue);
-			finish();
-		}
-	}
-
 }

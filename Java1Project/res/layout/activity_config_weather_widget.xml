@@ -10,8 +10,14 @@
 
     <Spinner android:id="@+id/citySpinner"
 			android:layout_width="fill_parent" android:layout_height="wrap_content" />
-    
-    <Button android:id="@+id/submitButton" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Save default city" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/citySpinner"
+        android:layout_alignRight="@+id/citySpinner"
+        android:layout_below="@+id/citySpinner"
+        android:text="Save default city" />
 
 </RelativeLayout>
