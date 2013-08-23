@@ -63,9 +63,9 @@ public final class R {
         public static final int tempMin=0x7f0b0007;
         public static final int tempMinLabel=0x7f0b0008;
         public static final int textView1=0x7f0b0016;
+        public static final int textView2=0x7f0b0017;
         public static final int weather_fragment=0x7f0b0015;
         public static final int webpageButton=0x7f0b0014;
-        public static final int widget_tableLayout=0x7f0b0017;
     }
     public static final class layout {
         public static final int activity_config_weather_widget=0x7f030000;
