@@ -8,7 +8,7 @@
 		android:src="@drawable/logo" android:gravity="center" style="@style/Branding"
 		android:paddingBottom="10dp" />
 
-	<LinearLayout android:layout_width="match_parent"
+	<!-- <LinearLayout android:layout_width="match_parent"
 		android:layout_height="wrap_content" android:orientation="vertical"
 		android:paddingBottom="50dp">
 
@@ -25,9 +25,9 @@
 
 			<Button android:id="@+id/saveDefaultCity"
 				android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Save Default city" />
-		</LinearLayout>
+		</LinearLayout> -->
 
-	</LinearLayout>
+	<!-- </LinearLayout> -->
 
 	<LinearLayout android:layout_width="match_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal">

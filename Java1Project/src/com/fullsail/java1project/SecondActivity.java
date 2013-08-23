@@ -60,9 +60,9 @@ public class SecondActivity extends Activity implements PreferencesFragment.Pref
 		}
 
 		// Grab the default city or static default if it does not exist.
-		cityName = (EditText)findViewById(R.id.defaultCityEditText);
-		String cityNameString = _preferences.getString("defaultCity", "dallas");
-		cityName.setText(cityNameString);
+//		cityName = (EditText)findViewById(R.id.defaultCityEditText);
+//		String cityNameString = _preferences.getString("defaultCity", "dallas");
+//		cityName.setText(cityNameString);
 	}
 
 	/* (non-Javadoc)

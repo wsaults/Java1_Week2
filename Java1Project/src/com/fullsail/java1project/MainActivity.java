@@ -32,10 +32,7 @@ import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -265,9 +262,6 @@ public class MainActivity extends Activity implements WeatherFragment.WeatherLis
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
-	        case R.id.action_search:
-//	            openSearch();
-	            return true;
 	        case R.id.action_preferences:
 	            switchToPreferencesActivity();
 	            return true;

@@ -25,14 +25,14 @@ public class PreferencesFragment extends Fragment {
 
 		LinearLayout view = (LinearLayout) inflater.inflate(R.layout.secondlayout, container, false);
 
-		// Save the default city based on the value entered into the city editText.
-		Button saveCityButton = (Button) view.findViewById(R.id.saveDefaultCity);
-		saveCityButton.setOnClickListener(new View.OnClickListener() { 
-			@Override
-			public void onClick(View v) {
-				listener.saveCity();
-			}
-		});
+//		// Save the default city based on the value entered into the city editText.
+//		Button saveCityButton = (Button) view.findViewById(R.id.saveDefaultCity);
+//		saveCityButton.setOnClickListener(new View.OnClickListener() { 
+//			@Override
+//			public void onClick(View v) {
+//				listener.saveCity();
+//			}
+//		});
 
 		// Launch web page
 		Button webButton = (Button) view.findViewById(R.id.webpageButton);

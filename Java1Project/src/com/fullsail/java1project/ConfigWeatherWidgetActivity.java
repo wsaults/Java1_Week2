@@ -14,7 +14,6 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.fullsail.lib.Connectivity;
@@ -174,24 +173,20 @@ public class ConfigWeatherWidgetActivity extends Activity {
 				//get JSONObject from result
 				JSONObject json = new JSONObject(result);
 
-				JSONObject coord = json.getJSONObject("coord");
-				JSONObject sys = json.getJSONObject("sys");
-				JSONArray weather = json.getJSONArray("weather");
+//				JSONObject coord = json.getJSONObject("coord");
+//				JSONArray weather = json.getJSONArray("weather");
 				JSONObject main = json.getJSONObject("main");
-				JSONObject wind = json.getJSONObject("wind");
-				JSONObject clouds = json.getJSONObject("clouds");
 
-				Log.i("coord", coord.toString());
-				Log.i("weather", weather.toString());
-				Log.i("main", main.toString());
-				Log.i("id", json.getString("id"));
+//				Log.i("coord", coord.toString());
+//				Log.i("weather", weather.toString());
+//				Log.i("main", main.toString());
+//				Log.i("id", json.getString("id"));
 
 				//Kelven to Fahrenheit conversion (K - 273.15)* 1.8000 + 32.00
 				Double temp = Double.parseDouble(main.getString("temp"));
 				temp = (temp - 273.15) * 1.8000 + 32.00;
 				BigDecimal bd = new BigDecimal(temp).setScale(2, RoundingMode.HALF_UP);
 
-//				_temp.setText(bd.toString());
 				rv.setTextViewText(R.id.textView2, bd.toString());
 			}
 			catch (Exception e) {

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 public class WeatherFragment extends Fragment {
 
+	@SuppressWarnings("unused")
 	private WeatherListener listener;
 
 	public interface WeatherListener {
