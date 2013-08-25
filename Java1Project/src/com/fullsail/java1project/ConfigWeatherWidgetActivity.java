@@ -19,10 +19,13 @@ import org.json.JSONObject;
 import com.fullsail.lib.Connectivity;
 import com.fullsail.lib.FetchJsonData;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -36,6 +39,7 @@ import android.widget.Spinner;
 
 public class ConfigWeatherWidgetActivity extends Activity {
 
+	final String URI = "http://www.openweather.org";
 	Spinner spinner;
 	private ConfigWeatherWidgetActivity _context;
 	public static Boolean connected = false;
@@ -62,6 +66,18 @@ public class ConfigWeatherWidgetActivity extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
 		spinner.setAdapter(adapter);
+		
+		rv = new RemoteViews(_context.getPackageName(), R.layout.widget_layout);
+		
+		// Setup the button intent
+//		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(_context.URI));
+		Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+		PendingIntent pi = PendingIntent.getActivity(_context, 0, intent, 0);
+		rv.setOnClickPendingIntent(R.id.openAppButton, pi);
+		AppWidgetManager.getInstance(_context).updateAppWidget(widgetId, rv);
+		Intent resultValue = new Intent();
+		resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+		setResult(RESULT_OK, resultValue);
 
 		Button button = (Button) this.findViewById(R.id.submitButton);
 		button.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +96,6 @@ public class ConfigWeatherWidgetActivity extends Activity {
 						editor.commit();
 					}
 
-					rv = new RemoteViews(_context.getPackageName(), R.layout.widget_layout);
 
 					// save spinner choice			
 					spinnerChoice = spinner.getSelectedItem().toString();
@@ -120,7 +135,6 @@ public class ConfigWeatherWidgetActivity extends Activity {
 				}
 			}
 		});
-
 	}
 	
 	private class Request extends AsyncTask<String, Void, String> {

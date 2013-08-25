@@ -39,8 +39,8 @@ public final class R {
     }
     public static final class id {
         public static final int GridLayout1=0x7f0b0002;
-        public static final int action_preferences=0x7f0b0016;
-        public static final int action_refresh=0x7f0b0015;
+        public static final int action_preferences=0x7f0b0017;
+        public static final int action_refresh=0x7f0b0016;
         public static final int brandingImage=0x7f0b000b;
         public static final int celciusButton=0x7f0b0010;
         public static final int citySpinner=0x7f0b0000;
@@ -49,6 +49,7 @@ public final class R {
         public static final int description=0x7f0b0009;
         public static final int descriptionLabel=0x7f0b000a;
         public static final int fahrenheitButton=0x7f0b000f;
+        public static final int openAppButton=0x7f0b0015;
         public static final int preferences_fragment=0x7f0b000d;
         public static final int submitButton=0x7f0b0001;
         public static final int tableLayout=0x7f0b000c;
